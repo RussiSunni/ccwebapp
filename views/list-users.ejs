@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Concious Coding</title>
+</head>
+
+<body>
+    <h1>Student List</h1>
+    <ul>
+        <% for(var i=0; i<students.length; i++) {%>
+            <li>
+                <a href="/users/<%= students[i].id %>">
+                    <%= students[i].id %>
+                        <%= students[i].first_name %>
+                            <%= students[i].last_name %>
+                </a>
+            </li>
+            <% } %>
+    </ul>
+</body>
+
+</html>
