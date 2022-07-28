@@ -28,58 +28,37 @@ conn.connect((err) => {
 
 
 /**
- * Get All Items
+ * Get All Sessions
  *
  * @return response()
  */
 router.get('/', (req, res) => {
-    let sqlQuery = "SELECT * FROM users";
+    let sqlQuery = "SELECT * FROM sessions";
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
-        res.render('list-users', { students: results });
+        res.render('list-sessions', { students: results });
     });
 });
 
 
-
-/**
- * Get Single Item
- *
- * @return response()
- */
-router.get('/:id', (req, res) => {
-    //let sqlQuery = "SELECT * FROM users WHERE id=" + req.params.id;
-
-    // let query = conn.query(sqlQuery, (err, results) => {
-    //     if (err) throw err;
-    //     res.render('show-user', { student: results });
-    // });
-
-    res.send("user with id " + req.params.id);
-});
-
-
-// Add user
+// Add session
 router.get('/add', (req, res) => {
-    res.render('add-user')
+    res.render('add-session')
 })
 
 /**
- * Create New Item
+ * Create New Session
  *
  * @return response()
  */
 router.post('/', (req, res) => {
-    let data = { first_name: req.body.first_name, last_name: req.body.last_name };
-    let sqlQuery = "INSERT INTO users SET ?";
+    let data = { name: req.body.name };
+    let sqlQuery = "INSERT INTO sessions SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) throw err;
         res.send(apiResponse(results));
     });
 });
-
-
-
 
 
 module.exports = router

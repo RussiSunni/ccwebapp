@@ -24,8 +24,9 @@ app.get('/pathways/blue', (req, res) => {
 
 
 const userRouter = require('./routes/users')
-
 app.use('/users', userRouter)
+const sessionRouter = require('./routes/sessions')
+app.use('/sessions', sessionRouter)
 
 
 
