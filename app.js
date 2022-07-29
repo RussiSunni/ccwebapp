@@ -23,6 +23,11 @@ app.get('/pathways/blue', (req, res) => {
 })
 
 
+app.get('/games/pathways', (req, res) => {
+    res.render("games/pathways")
+})
+
+
 const userRouter = require('./routes/users')
 app.use('/users', userRouter)
 const sessionRouter = require('./routes/sessions')

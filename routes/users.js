@@ -42,21 +42,21 @@ router.get('/', (req, res) => {
 
 
 
-/**
- * Get Single Item
- *
- * @return response()
- */
-router.get('/:id', (req, res) => {
-    //let sqlQuery = "SELECT * FROM users WHERE id=" + req.params.id;
+// /**
+//  * Get Single Item
+//  *
+//  * @return response()
+//  */
+// router.get('/:id', (req, res) => {
+//     //let sqlQuery = "SELECT * FROM users WHERE id=" + req.params.id;
 
-    // let query = conn.query(sqlQuery, (err, results) => {
-    //     if (err) throw err;
-    //     res.render('show-user', { student: results });
-    // });
+//     // let query = conn.query(sqlQuery, (err, results) => {
+//     //     if (err) throw err;
+//     //     res.render('show-user', { student: results });
+//     // });
 
-    res.send("user with id " + req.params.id);
-});
+//     res.send("user with id " + req.params.id);
+// });
 
 
 // Add user
@@ -70,7 +70,7 @@ router.get('/add', (req, res) => {
  * @return response()
  */
 router.post('/', (req, res) => {
-    let data = { first_name: req.body.first_name, last_name: req.body.last_name };
+    let data = { first_name: req.body.first_name, last_name: req.body.last_name, nick_name: req.body.nick_name };
     let sqlQuery = "INSERT INTO users SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) throw err;

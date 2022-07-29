@@ -4,9 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Concious Coding</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Concious Coding</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
 <body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/users/add">Add user</a>
+    </div>
     <h1>Student List</h1>
     <ul>
         <% for(var i=0; i<students.length; i++) {%>
@@ -15,9 +22,44 @@
                     <%= students[i].id %>
                         <%= students[i].first_name %>
                             <%= students[i].last_name %>
+                                <%= students[i].nick_name %>
+                                    <%= students[i].team %>
                 </a>
             </li>
             <% } %>
+    </ul>
+
+    <p>&nbsp;</p>
+    <hr>
+    <p>&nbsp;</p>
+
+    <h2>Yellow Team</h2>
+    <ul>
+        <% for(var i=0; i<students.length; i++) {%>
+            <% if(students[i].team=="yellow" ){ %>
+                <li>
+                    <a href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
+                        <%= students[i].id %>
+                            <%= students[i].first_name %>
+                                <%= students[i].last_name %>
+                    </a>
+                </li>
+                <% } %>
+                    <% } %>
+    </ul>
+    <h2>Blue Team</h2>
+    <ul>
+        <% for(var i=0; i<students.length; i++) {%>
+            <% if(students[i].team=="blue" ){ %>
+                <li>
+                    <a href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
+                        <%= students[i].id %>
+                            <%= students[i].first_name %>
+                                <%= students[i].last_name %>
+                    </a>
+                </li>
+                <% } %>
+                    <% } %>
     </ul>
 </body>
 

@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
     let sqlQuery = "SELECT * FROM sessions";
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
-        res.render('list-sessions', { students: results });
+        res.render('list-sessions', { sessions: results });
     });
 });
 
