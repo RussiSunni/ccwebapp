@@ -9,22 +9,25 @@ const mysql = require('mysql');
 Database Connection
 --------------------------------------------
 --------------------------------------------*/
-const conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'conscious_coding'
-});
+// const conn = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'conscious_coding'
+// });
 
-/*------------------------------------------
---------------------------------------------
-Shows Mysql Connect
---------------------------------------------
---------------------------------------------*/
-conn.connect((err) => {
-    if (err) throw err;
-    console.log('Mysql connected...');
-});
+// /*------------------------------------------
+// --------------------------------------------
+// Shows Mysql Connect
+// --------------------------------------------
+// --------------------------------------------*/
+// conn.connect((err) => {
+//     if (err) {
+//         console.log("MySQL not connected problem");
+//         // throw err;
+//     }
+//     console.log('Mysql connected...');
+// });
 
 
 /**
