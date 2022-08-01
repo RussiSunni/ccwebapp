@@ -73,11 +73,11 @@ router.get('/add', (req, res) => {
  * @return response()
  */
 router.post('/', (req, res) => {
-    let data = { first_name: req.body.first_name, last_name: req.body.last_name, nick_name: req.body.nick_name };
+    let data = { first_name: req.body.first_name, last_name: req.body.last_name, team: req.body.team, nick_name: req.body.nick_name };
     let sqlQuery = "INSERT INTO users SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) throw err;
-        res.send(apiResponse(results));
+        // res.send(apiResponse(results));
     });
 });
 
