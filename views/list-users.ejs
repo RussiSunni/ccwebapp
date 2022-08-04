@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Concious Coding</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -33,34 +36,65 @@
     <hr>
     <p>&nbsp;</p>
 
-    <h2>Yellow Team</h2>
-    <ul>
-        <% for(var i=0; i<students.length; i++) {%>
-            <% if(students[i].team=="yellow" ){ %>
-                <li>
-                    <a href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
-                        <%= students[i].id %>
-                            <%= students[i].first_name %>
-                                <%= students[i].last_name %>
-                    </a>
-                </li>
-                <% } %>
-                    <% } %>
-    </ul>
-    <h2>Blue Team</h2>
-    <ul>
-        <% for(var i=0; i<students.length; i++) {%>
-            <% if(students[i].team=="blue" ){ %>
-                <li>
-                    <a href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
-                        <%= students[i].id %>
-                            <%= students[i].first_name %>
-                                <%= students[i].last_name %>
-                    </a>
-                </li>
-                <% } %>
-                    <% } %>
-    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6" style="border:1px solid blue;">
+                <h1>Game Settings</h1>
+
+                <form action="/users" method="POST">
+                    <!-- <label for="name">Session name</label></br></br>
+                    <input type="text" placeholder="name" name="name"></br></br>
+                    <label for="games">Cohort</label></br></br>
+                    <select name="cohorts" id="cohorts">
+                        <option value="1">1</option>
+                    </select></br></br>
+                    <label for="games">Game type</label></br></br>
+                    <select name="games" id="games">
+                        <option value="pathways">Pathways</option>
+                    </select></br></br> -->
+                    <label for="name">Turns per round = 10</label></br></br>
+                    <!-- <input type="text" placeholder="turns" name="turns"></br></br>
+                    <button type="submit">Submit</button> -->
+                </form>
+
+            </div>
+            <div class="col-sm-6" style="background-color:pink;">
+                <h1>Teams</h1>
+                <h2>Yellow Team</h2>
+                <ul>
+                    <% for(var i=0; i<students.length; i++) {%>
+                        <% if(students[i].team=="Yellow" ){ %>
+                            <li>
+                                <a
+                                    href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
+                                    <%= students[i].id %>
+                                        <%= students[i].first_name %>
+                                            <%= students[i].last_name %>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% } %>
+                </ul>
+                <h2>Blue Team</h2>
+                <ul>
+                    <% for(var i=0; i<students.length; i++) {%>
+                        <% if(students[i].team=="Blue" ){ %>
+                            <li>
+                                <a
+                                    href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
+                                    <%= students[i].id %>
+                                        <%= students[i].first_name %>
+                                            <%= students[i].last_name %>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>
