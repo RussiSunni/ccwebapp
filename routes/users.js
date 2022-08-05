@@ -13,6 +13,7 @@ const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'C0nsc!0u5C0d!ng2022',
+    //password: '',
     database: 'conscious_coding'
 });
 
@@ -78,6 +79,8 @@ router.post('/', (req, res) => {
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) throw err;
         // res.send(apiResponse(results));
+        res.send("user added");
+        res.end();
     });
 });
 

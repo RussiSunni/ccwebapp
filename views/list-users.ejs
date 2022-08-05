@@ -40,32 +40,48 @@
         <div class="row">
             <div class="col-sm-6" style="border:1px solid blue;">
                 <h1>Game Settings</h1>
-
-                <form action="/users" method="POST">
-                    <!-- <label for="name">Session name</label></br></br>
-                    <input type="text" placeholder="name" name="name"></br></br>
-                    <label for="games">Cohort</label></br></br>
-                    <select name="cohorts" id="cohorts">
-                        <option value="1">1</option>
-                    </select></br></br>
-                    <label for="games">Game type</label></br></br>
-                    <select name="games" id="games">
-                        <option value="pathways">Pathways</option>
-                    </select></br></br> -->
-                    <label for="name">Turns per round = 10</label></br></br>
-                    <!-- <input type="text" placeholder="turns" name="turns"></br></br>
-                    <button type="submit">Submit</button> -->
-                </form>
-
+                <p><strong>Game type = Pathways</strong></p>
+                <label for="turns">Turns per round</label></br></br>
+                <input id="turns" type="number" placeholder="turns" name="turns"></br></br>
+                <button type="submit" onclick="createURLs()">Submit</button>
             </div>
-            <div class="col-sm-6" style="background-color:pink;">
+
+            <script>
+                function createURLs() {
+
+                    // get the parameters
+                    let turns = document.getElementById('turns').value;
+                    console.log(typeof turns);
+
+                    // modify the urls
+                    const playerURLs = document.getElementsByClassName("players");
+
+                    for (let i = 0; i < playerURLs.length; i++) {
+                        let href = playerURLs[i].getAttribute("href");
+                        href = href + "&moves=" + turns;
+                        // console.log(href);
+                        playerURLs[i].setAttribute("href", href);
+                    }
+
+                    // Reveal block
+                    if (turns == "" || turns == "e") {
+                        alert("Please choose number of turns per round.");
+                    }
+                    else {
+                        document.getElementById("playerURLS").style.display = "block";
+                    }
+                }
+            </script>
+
+
+            <div id="playerURLS" class="col-sm-6" style="display:none; background-color:pink;">
                 <h1>Teams</h1>
                 <h2>Yellow Team</h2>
                 <ul>
                     <% for(var i=0; i<students.length; i++) {%>
                         <% if(students[i].team=="Yellow" ){ %>
                             <li>
-                                <a
+                                <a class="players"
                                     href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
                                     <%= students[i].id %>
                                         <%= students[i].first_name %>
@@ -80,7 +96,7 @@
                     <% for(var i=0; i<students.length; i++) {%>
                         <% if(students[i].team=="Blue" ){ %>
                             <li>
-                                <a
+                                <a class="players"
                                     href="games/pathways?nick_name=<%= students[i].nick_name%>&team=<%= students[i].team%>">
                                     <%= students[i].id %>
                                         <%= students[i].first_name %>
