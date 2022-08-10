@@ -41,8 +41,12 @@
             <div class="col-sm-6" style="border:1px solid blue;">
                 <h1>Game Settings</h1>
                 <p><strong>Game type = Pathways</strong></p>
+                <label for="rounds">Number of rounds</label></br></br>
+                <input id="rounds" type="number" placeholder="rounds" name="rounds"></br></br>
                 <label for="turns">Turns per round</label></br></br>
                 <input id="turns" type="number" placeholder="turns" name="turns"></br></br>
+                <label for="seconds">Seconds per round</label></br></br>
+                <input id="seconds" type="number" placeholder="seconds" name="seconds"></br></br>
                 <button type="submit" onclick="createURLs()">Submit</button>
             </div>
 
@@ -51,6 +55,7 @@
 
                     // get the parameters
                     let turns = document.getElementById('turns').value;
+                    let seconds = document.getElementById('seconds').value;
                     console.log(typeof turns);
 
                     // modify the urls
@@ -58,13 +63,13 @@
 
                     for (let i = 0; i < playerURLs.length; i++) {
                         let href = playerURLs[i].getAttribute("href");
-                        href = href + "&moves=" + turns;
+                        href = href + "&moves=" + turns + "&seconds=" + seconds;
                         // console.log(href);
                         playerURLs[i].setAttribute("href", href);
                     }
 
                     // Reveal block
-                    if (turns == "" || turns == "e") {
+                    if (turns == "" || turns == "e" || seconds == "" || seconds == "e") {
                         alert("Please choose number of turns per round.");
                     }
                     else {
