@@ -48,8 +48,13 @@
                 <label for="seconds">Seconds per round</label></br></br>
                 <input id="seconds" type="number" placeholder="seconds" name="seconds"></br></br>
                 <h2>Points</h2>
-                <p>toggles: 1 point</p>
-                <p>endpoints: 50 points</p>
+                <label for="toggle_points">Points per connection</label></br></br>
+                <input id="toggle_points" type="number" placeholder="points per connection"
+                    name="toggle_points"></br></br>
+                <label for="endpoint_points">Points per endpoint</label></br></br>
+                <input id="endpoint_points" type="number" placeholder="Points per endpoint"
+                    name="endpoint_points"></br></br>
+
                 <button type="submit" onclick="createURLs()">Submit</button>
             </div>
 
@@ -57,16 +62,21 @@
                 function createURLs() {
 
                     // get the parameters
+                    let rounds = document.getElementById('rounds').value;
                     let turns = document.getElementById('turns').value;
                     let seconds = document.getElementById('seconds').value;
-                    console.log(typeof turns);
+
+                    let togglePoints = document.getElementById('toggle_points').value;
+                    let endpointPoints = document.getElementById('endpoint_points').value;
+
 
                     // modify the urls
                     const playerURLs = document.getElementsByClassName("players");
 
                     for (let i = 0; i < playerURLs.length; i++) {
                         let href = playerURLs[i].getAttribute("href");
-                        href = href + "&moves=" + turns + "&seconds=" + seconds;
+                        href = href + "&rounds=" + rounds + "&moves=" + turns + "&seconds=" + seconds +
+                            "&toggle_points=" + togglePoints + "&endpoint_points=" + endpointPoints;
                         // console.log(href);
                         playerURLs[i].setAttribute("href", href);
                     }
