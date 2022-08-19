@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Concious Coding</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <h1 style="text-align: center;">Create Cohort</h1>
+            <div class="col-sm-6" style="border:1px solid blue;">
+                <h2>Game Settings</h2>
+                <p><strong>Game type = Pathways</strong></p>
+                <form action="/cohorts" method="POST">
+                    <label for="name">Name</label></br></br>
+                    <input id="name" type="string" placeholder="name" name="name"></br></br>
+                    <label for="rounds">Number of rounds</label></br></br>
+                    <input id="rounds" type="number" placeholder="rounds" name="rounds"></br></br>
+                    <label for="turns">Turns per round</label></br></br>
+                    <input id="turns" type="number" placeholder="turns" name="turns"></br></br>
+                    <label for="seconds">Seconds per round</label></br></br>
+                    <input id="seconds" type="number" placeholder="seconds" name="seconds"></br></br>
+                    <label for="toggle_points">Points per connection</label></br></br>
+                    <input id="toggle_points" type="number" placeholder="points per connection"
+                        name="toggle_points"></br></br>
+                    <label for="endpoint_points">Points per endpoint</label></br></br>
+                    <input id="endpoint_points" type="number" placeholder="Points per endpoint"
+                        name="endpoint_points"></br></br>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div class="col-sm-6" style="border:1px solid blue;">
+                <h2>Add Players</h2>
+
+                <input id="playerName" type="text" placeholder="nick name" name="nick_name"><br><br>
+                <label for="team">Team:</label>
+                <select name="team" id="playerTeam">
+                    <option value="Yellow">Yellow</option>
+                    <option value="Blue">Blue</option>
+                </select><br><br>
+
+
+                <button onclick="addToPlayerList()">Submit</button>
+                <div>
+                    <ul id="playerList">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let players = [];
+        const player = {
+            name: "",
+            team: ""
+        };
+
+        function addToPlayerList() {
+
+            player.name = document.getElementById("playerName").value;
+            player.team = document.getElementById("playerTeam").value;
+            players.push(player);
+
+            var list = document.createElement('li');
+            list.appendChild(document.createTextNode(player.name));
+            list.appendChild(document.createTextNode(", "));
+            list.appendChild(document.createTextNode(player.team));
+            document.getElementById("playerList").appendChild(list);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Concious Coding</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/cohorts">Cohorts</a>
+    </div>
+    <h1>Cohort</h1>
+    <div>
+        <ul>
+            <li><strong>Id:</strong> <span id="id"></span></li>
+            <li><strong>Name:</strong> <span id="name"></span></li>
+            <li><strong>Number of rounds:</strong> <span id="numberOfRounds"></span></li>
+            <li><strong>Number of moves:</strong> <span id="numberOfMoves"></span></li>
+            <li><strong>Number of seconds:</strong> <span id="numberOfSeconds"></span></li>
+            <li><strong>Points per toggle:</strong> <span id="pointsPerToggle"></span></li>
+            <li><strong>Points per endpoint:</strong> <span id="pointsPerEndpoint"></span></li>
+        </ul>
+    </div>
+
+
+    <script type="text/javascript">
+        var cohortId = '<%- cohortId %>';
+        var url = "/api/cohort/" + cohortId;
+
+        var name;
+        var numberOfRounds;
+        var numberOfMoves;
+        var numberOfSeconds;
+        var pointsPerToggle;
+        var pointsPerEndpoint;
+
+        //  console.log(url);
+        //     var studentSkills;
+
+        $.get(url, function (data, status) {
+
+            name = data[0].name;
+            numberOfRounds = data[0].number_rounds
+            numberOfMoves = data[0].number_moves
+            numberOfSeconds = data[0].number_seconds
+            pointsPerToggle = data[0].points_toggle
+            pointsPerEndpoint = data[0].points_endpoint
+
+            // console.log(data[0]);
+            document.getElementById("id").innerHTML = JSON.stringify(data[0].id);
+            document.getElementById("name").innerHTML = JSON.stringify(data[0].name);
+            document.getElementById("numberOfRounds").innerHTML = JSON.stringify(data[0].number_rounds);
+            document.getElementById("numberOfMoves").innerHTML = JSON.stringify(data[0].number_moves);
+            document.getElementById("numberOfSeconds").innerHTML = JSON.stringify(data[0].number_seconds);
+            document.getElementById("pointsPerToggle").innerHTML = JSON.stringify(data[0].points_toggle);
+            document.getElementById("pointsPerEndpoint").innerHTML = JSON.stringify(data[0].points_endpoint);
+        });
+    </script>
+
+    <div style="border:1px solid blue;">
+        <h2>Add Players</h2>
+
+        <input id="playerName" type="text" placeholder="nick name" name="nick_name"><br><br>
+        <label for="team">Team:</label>
+        <select name="team" id="playerTeam">
+            <option value="Yellow">Yellow</option>
+            <option value="Blue">Blue</option>
+        </select><br><br>
+
+        <button onclick="addToPlayerList()">Add to player list</button>
+        <div>
+            <ul id="playerList">
+
+            </ul>
+        </div>
+
+        <button onclick="createLinks()">Create links</button>
+        <div>
+            <ul id="linkList">
+
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let players = [];
+        const player = {
+            name: "",
+            team: ""
+        };
+
+        function addToPlayerList() {
+
+            player.name = document.getElementById("playerName").value;
+            player.team = document.getElementById("playerTeam").value;
+            players.push(player);
+
+            var list = document.createElement('li');
+            list.appendChild(document.createTextNode(player.name));
+            list.appendChild(document.createTextNode(", "));
+            list.appendChild(document.createTextNode(player.team));
+            document.getElementById("playerList").appendChild(list);
+        }
+
+        function createLinks() {
+
+            let links = [];
+
+            for (var i = 0; i < players.length; i++) {
+                let href = window.location.hostname + ":3000/games/pathways?";
+
+                href = href + "nick_name=" + players[i].name + "&team=" + players[i].team;
+                href = href + "&rounds=" + numberOfRounds + "&moves=" + numberOfMoves + "&seconds=" + numberOfSeconds +
+                    "&toggle_points=" + pointsPerToggle + "&endpoint_points=" + pointsPerEndpoint;
+                links.push(href);
+
+                const list = document.createElement('li');
+                const a = document.createElement("a");
+                a.appendChild(document.createTextNode(href));
+                a.setAttribute("href", href);
+                list.appendChild(a);
+                document.getElementById("linkList").appendChild(list);
+            }
+
+
+            console.log(window.location.hostname);
+        }
+    </script>
+
+</body>
+
+</html>

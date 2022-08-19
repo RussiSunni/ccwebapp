@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Concious Coding</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/cohorts/add">Add cohort</a>
+    </div>
+    <h1>Cohort List</h1>
+    <ul>
+        <% for(var i=0; i<cohorts.length; i++) {%>
+            <li>
+                <a href="/cohorts/<%= cohorts[i].id %>">
+                    <%= cohorts[i].name %>
+                </a>
+            </li>
+            <% } %>
+    </ul>
+
+</body>
+
+</html>
