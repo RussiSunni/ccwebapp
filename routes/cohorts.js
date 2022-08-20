@@ -30,6 +30,26 @@ conn.connect((err) => {
     console.log('Mysql connected...');
 });
 
+// Add cohort
+router.get('/add', (req, res) => {
+    res.render('add-cohort')
+})
+
+/**
+ * Create New Item
+ *
+ * @return response()
+ */
+router.post('/', (req, res) => {
+    let data = { name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.turns, number_seconds: req.body.seconds, points_toggle: req.body.toggle_points, points_endpoint: req.body.endpoint_points };
+    let sqlQuery = "INSERT INTO cohorts SET ?";
+    let query = conn.query(sqlQuery, data, (err, results) => {
+        if (err) throw err;
+        res.send("cohort added");
+        res.end();
+    });
+});
+
 
 /**
  * Get All Items
@@ -54,25 +74,27 @@ router.get('/:id', (req, res) => {
     res.render('show-cohort', { cohortId: req.params.id });
 });
 
-// Add cohort
-router.get('/add', (req, res) => {
-    res.render('add-cohort')
+
+// Individual cohort.
+router.get('/api/:id', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+
+    let sqlQuery = `
+SELECT *
+FROM conscious_coding.cohorts
+WHERE conscious_coding.cohorts.id = ` + req.params.id + ";";
+
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+
+        res.json(results);
+    });
 })
 
-/**
- * Create New Item
- *
- * @return response()
- */
-router.post('/', (req, res) => {
-    let data = { name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.turns, number_seconds: req.body.seconds, points_toggle: req.body.toggle_points, points_endpoint: req.body.endpoint_points };
-    let sqlQuery = "INSERT INTO cohorts SET ?";
-    let query = conn.query(sqlQuery, data, (err, results) => {
-        if (err) throw err;
-        res.send("cohort added");
-        res.end();
-    });
-});
+
+
+
+
 
 
 module.exports = router

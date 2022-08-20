@@ -14,15 +14,6 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/pathways/yellow', (req, res) => {
-    res.render("games/pathways")
-})
-
-app.get('/pathways/blue', (req, res) => {
-    res.render("games/pathways")
-})
-
-
 app.get('/games/pathways', (req, res) => {
     res.render("games/pathways")
 })
@@ -58,42 +49,25 @@ conn.connect((err) => {
 });
 
 
-app.get('/games/api', (req, res) => {
-    let sqlQuery = "SELECT * FROM games";
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        console.log(results);
-        res.send(results);
-    });
-});
+// app.get('/games/api', (req, res) => {
+//     let sqlQuery = "SELECT * FROM games";
+//     let query = conn.query(sqlQuery, (err, results) => {
+//         if (err) throw err;
+//         console.log(results);
+//         res.send(results);
+//     });
+// });
 
 
 // ------------------------------------------
 
-// Individual cohort.
-app.get('/api/cohort/:id', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-
-    let sqlQuery = `
-    SELECT *
-    FROM conscious_coding.cohorts
-    WHERE conscious_coding.cohorts.id = ` + req.params.id
-
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-
-        res.json(results);
-    });
-})
 
 
+// const userRouter = require('./routes/users')
+// app.use('/users', userRouter)
 
-
-const userRouter = require('./routes/users')
-app.use('/users', userRouter)
-
-const gameRouter = require('./routes/games')
-app.use('/games', gameRouter)
+// const gameRouter = require('./routes/games')
+// app.use('/games', gameRouter)
 
 const cohortRouter = require('./routes/cohorts')
 app.use('/cohorts', cohortRouter)

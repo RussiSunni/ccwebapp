@@ -12,6 +12,10 @@
 </head>
 
 <body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/cohorts">Cohorts</a>
+    </div>
 
     <div class="container">
         <div class="row">
@@ -38,46 +42,9 @@
                 </form>
             </div>
 
-            <div class="col-sm-6" style="border:1px solid blue;">
-                <h2>Add Players</h2>
-
-                <input id="playerName" type="text" placeholder="nick name" name="nick_name"><br><br>
-                <label for="team">Team:</label>
-                <select name="team" id="playerTeam">
-                    <option value="Yellow">Yellow</option>
-                    <option value="Blue">Blue</option>
-                </select><br><br>
-
-
-                <button onclick="addToPlayerList()">Submit</button>
-                <div>
-                    <ul id="playerList">
-
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
-    <script>
-        let players = [];
-        const player = {
-            name: "",
-            team: ""
-        };
 
-        function addToPlayerList() {
-
-            player.name = document.getElementById("playerName").value;
-            player.team = document.getElementById("playerTeam").value;
-            players.push(player);
-
-            var list = document.createElement('li');
-            list.appendChild(document.createTextNode(player.name));
-            list.appendChild(document.createTextNode(", "));
-            list.appendChild(document.createTextNode(player.team));
-            document.getElementById("playerList").appendChild(list);
-        }
-    </script>
 </body>
 
 </html>

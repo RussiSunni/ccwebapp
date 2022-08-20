@@ -13,7 +13,6 @@
 <body>
     <div class="topnav">
         <a class="active" href="/">Home</a>
-        <a href="/cohorts">Cohorts</a>
     </div>
     <h1>Cohort</h1>
     <div>
@@ -31,7 +30,7 @@
 
     <script type="text/javascript">
         var cohortId = '<%- cohortId %>';
-        var url = "/api/cohort/" + cohortId;
+        var url = "/cohorts/api/" + cohortId;
 
         var name;
         var numberOfRounds;
@@ -90,12 +89,12 @@
 
     <script>
         let players = [];
-        const player = {
-            name: "",
-            team: ""
-        };
 
         function addToPlayerList() {
+            const player = {
+                name: "",
+                team: ""
+            };
 
             player.name = document.getElementById("playerName").value;
             player.team = document.getElementById("playerTeam").value;
@@ -113,6 +112,7 @@
             let links = [];
 
             for (var i = 0; i < players.length; i++) {
+
                 let href = window.location.hostname + ":3000/games/pathways?";
 
                 href = href + "nick_name=" + players[i].name + "&team=" + players[i].team;
@@ -127,9 +127,6 @@
                 list.appendChild(a);
                 document.getElementById("linkList").appendChild(list);
             }
-
-
-            console.log(window.location.hostname);
         }
     </script>
 
