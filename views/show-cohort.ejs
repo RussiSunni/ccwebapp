@@ -113,7 +113,7 @@
 
             for (var i = 0; i < players.length; i++) {
 
-                let href = window.location.hostname + ":3000/games/pathways?";
+                let href = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
 
                 href = href + "nick_name=" + players[i].name + "&team=" + players[i].team;
                 href = href + "&rounds=" + numberOfRounds + "&moves=" + numberOfMoves + "&seconds=" + numberOfSeconds +

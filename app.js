@@ -45,7 +45,9 @@ conn.connect((err) => {
         console.log("MySQL not connected problem");
         // throw err;
     }
-    console.log('Mysql connected...');
+    else {
+        console.log('Mysql connected...');
+    }
 });
 
 
