@@ -12,8 +12,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'C0nsc!0u5C0d!ng2022',
-    //password: '',
+    //password: 'C0nsc!0u5C0d!ng2022',
+    password: '',
     database: 'conscious_coding'
 });
 
@@ -64,6 +64,16 @@ router.get('/', (req, res) => {
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
         res.render('list-cohorts', { cohorts: results });
+    });
+});
+
+router.get('/list', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sqlQuery = "SELECT * FROM cohorts";
+
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.json(results);
     });
 });
 

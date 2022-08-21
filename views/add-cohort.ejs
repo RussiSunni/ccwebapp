@@ -6,39 +6,32 @@
     <title>Concious Coding</title>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <div class="topnav">
-        <a class="active" href="/">Home</a>
+        <a class="active" href="/">Create Game</a>
+        <a href="/users">Users</a>
         <a href="/cohorts">Cohorts</a>
     </div>
-
     <div class="container">
         <div class="row">
-            <h1 style="text-align: center;">Create Cohort</h1>
-            <div class="col-sm-6" style="border:1px solid blue;">
-                <h2>Game Settings</h2>
-                <p><strong>Game type = Pathways</strong></p>
+            <div class="col-sm-4" style="border:1px solid blue;">
+                <h1 style="text-align: center;">Create Cohort</h1>
                 <form action="/cohorts" method="POST">
-                    <label for="name">Name</label></br></br>
-                    <input id="name" type="string" placeholder="name" name="name"></br></br>
-                    <label for="rounds">Number of rounds</label></br></br>
-                    <input id="rounds" type="number" placeholder="rounds" name="rounds"></br></br>
-                    <label for="turns">Turns per round</label></br></br>
-                    <input id="turns" type="number" placeholder="turns" name="turns"></br></br>
-                    <label for="seconds">Seconds per round</label></br></br>
-                    <input id="seconds" type="number" placeholder="seconds" name="seconds"></br></br>
-                    <label for="toggle_points">Points per connection</label></br></br>
-                    <input id="toggle_points" type="number" placeholder="points per connection"
-                        name="toggle_points"></br></br>
-                    <label for="endpoint_points">Points per endpoint</label></br></br>
-                    <input id="endpoint_points" type="number" placeholder="Points per endpoint"
-                        name="endpoint_points"></br></br>
-                    <button type="submit">Submit</button>
+                    <div class="mb-3">
+                        <label for="name">Name</label>
+                        <input id="name" type="string" placeholder="name" name="name" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
 
