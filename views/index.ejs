@@ -2,108 +2,126 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Concious Coding</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-  <!-- CSS only -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-  <!-- JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-    crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Concious Coding</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
-  <div class="topnav">
-    <a class="active" href="/">Create Game</a>
-    <a href="/users">Users</a>
-    <a href="/cohorts">Cohorts</a>
-  </div>
+	<div class="topnav">
+		<a class="active" href="/">Create Game</a>
+		<a href="/users">Users</a>
+		<a href="/cohorts">Cohorts</a>
+	</div>
 
 
-  <div class="container-fluid">
-    <div class="row">
-      <h1 style="text-align: center;">Create Game</h1>
-      <div class="col-sm-10">
-      </div>
-      <div class="col-sm-2">
-        <label for="cars">Choose a cohort:</label>
-        <form>
-          <select class="form-select" id="cohorts" name="cohorts">
-            <option>Choose a cohort</option>>
-          </select>
-          <button class="btn btn-primary" type="submit" onclick="chooseCohort()">Submit</button>
-        </form>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2" style="border:1px solid blue;">
-        <h2>Game Settings</h2>
-        <p><strong>Game type = Pathways</strong></p>
-        <form action="/cohorts" method="POST">
-          <div class="mb-3">
-            <label for="name">Name</label>
-            <input id="name" type="string" placeholder="name" name="name" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="rounds">Number of rounds</label>
-            <input id="rounds" type="number" placeholder="rounds" name="rounds" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="turns">Turns per round</label>
-            <input id="turns" type="number" placeholder="turns" name="turns" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="seconds">Seconds per round</label>
-            <input id="seconds" type="number" placeholder="seconds" name="seconds" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="toggle_points">Points per connection</label>
-            <input id="toggle_points" type="number" placeholder="points per connection" name="toggle_points"
-              class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="endpoint_points">Points per endpoint</label>
-            <input id="endpoint_points" type="number" placeholder="Points per endpoint" name="endpoint_points"
-              class="form-control">
-          </div>
-          <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
-      </div>
-      <div class="col-sm-8" style="border:1px solid blue; min-height: 700px;">
-        <p>will drag the players here</p>
-      </div>
-      <div class="col-sm-2" style="border:1px solid blue; min-height: 700px;">
-        <p>players from cohort here</p>
-      </div>
+	<div class="container-fluid">
+		<div class="row">
+			<h1 style="text-align: center;">Create Game</h1>
+			<div class="col-sm-10">
+			</div>
+			<div class="col-sm-2">
+				<label for="cars">Choose a cohort:</label>
+				<select class="form-select" id="cohorts" name="cohorts">
+					<option>Choose a cohort</option>>
+				</select>
+				<button class="btn btn-primary" type="submit" onclick="chooseCohort()">Submit</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2" style="border:1px solid blue;">
+				<h2>Game Settings</h2>
+				<p><strong>Game type = Pathways</strong></p>
+				<form action="/cohorts" method="POST">
+					<div class="mb-3">
+						<label for="name">Name</label>
+						<input id="name" type="string" placeholder="name" name="name" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label for="rounds">Number of rounds</label>
+						<input id="rounds" type="number" placeholder="rounds" name="rounds" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label for="turns">Turns per round</label>
+						<input id="turns" type="number" placeholder="turns" name="turns" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label for="seconds">Seconds per round</label>
+						<input id="seconds" type="number" placeholder="seconds" name="seconds" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label for="toggle_points">Points per connection</label>
+						<input id="toggle_points" type="number" placeholder="points per connection" name="toggle_points"
+							class="form-control">
+					</div>
+					<div class="mb-3">
+						<label for="endpoint_points">Points per endpoint</label>
+						<input id="endpoint_points" type="number" placeholder="Points per endpoint"
+							name="endpoint_points" class="form-control">
+					</div>
+					<button class="btn btn-primary" type="submit">Submit</button>
+				</form>
+			</div>
+			<div class="col-sm-8" style="border:1px solid blue; min-height: 700px;">
+				<p>will drag the players here</p>
+			</div>
+			<div class="col-sm-2" style="border:1px solid blue; min-height: 700px;">
+				<table id="userTable" class="table">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 
-    </div>
-  </div>
+		</div>
+	</div>
 
 
-  <script>
-    // Script for the drop-down list
-    var url = "/cohorts/list";
-    // get the rows from the SQL query
-    $.get(url, function (data, status) {
-      console.log(data);
+	<script>
+		// Script for the drop-down list
+		var url = "/cohorts/list";
+		// get the rows from the SQL query
+		$.get(url, function (data, status) {
 
-      var select = document.getElementById("cohorts");
-      var options = data;
+			var select = document.getElementById("cohorts");
+			var options = data;
 
-      for (var i = 0; i < options.length; i++) {
-        var opt = options[i];
-        var el = document.createElement("option");
-        el.textContent = opt.name;
-        el.value = opt.id;
-        select.appendChild(el);
-      }
-    });
-  </script>
+			for (var i = 0; i < options.length; i++) {
+				var opt = options[i];
+				var el = document.createElement("option");
+				el.textContent = opt.name;
+				el.value = opt.id;
+				select.appendChild(el);
+			}
+		});
+
+
+		function chooseCohort() {
+			let cohortId = document.getElementById('cohorts').value;
+
+			var url = "cohorts/" + cohortId + "/users";
+
+			// get the rows from the SQL query
+			$.get(url, function (data, status) {
+				var table = document.getElementById("userTable");
+
+				for (var i = 0; i < data.length; i++) {
+					var row = table.insertRow(0);
+					var cell1 = row.insertCell(0);
+					cell1.innerHTML = data[i].name;
+				}
+			});
+		}
+	</script>
 </body>
 
 </html>

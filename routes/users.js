@@ -69,20 +69,22 @@ router.get('/add', (req, res) => {
     res.render('add-user')
 })
 
-// /**
-//  * Create New Item
-//  *
-//  * @return response()
-//  */
-// router.post('/', (req, res) => {
-//     let data = { first_name: req.body.first_name, last_name: req.body.last_name, team: req.body.team, nick_name: req.body.nick_name };
-//     let sqlQuery = "INSERT INTO users SET ?";
-//     let query = conn.query(sqlQuery, data, (err, results) => {
-//         if (err) throw err;
-//         // res.send(apiResponse(results));
-//         res.send("user added");
-//         res.end();
-//     });
-// });
+/**
+ * Create New Item 
+ *
+ * @return response()
+ */
+router.post('/add', (req, res) => {
+    let data = { email: req.body.email, name: req.body.name, username: req.body.username, dob: req.body.dob, cohort_id: req.body.cohort };
+    let sqlQuery = "INSERT INTO users SET ?";
+    let query = conn.query(sqlQuery, data, (err, results) => {
+        if (err) {
+            throw err;
+        }
+        else {
+            res.render('list-users');
+        }
+    });
+});
 
 module.exports = router

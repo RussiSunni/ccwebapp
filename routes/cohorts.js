@@ -47,9 +47,12 @@ router.post('/add', (req, res) => {
     let data = { name: req.body.name };
     let sqlQuery = "INSERT INTO cohorts SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
-        if (err) throw err;
-        res.send("cohort added");
-        res.end();
+        if (err) {
+            throw err;
+        }
+        else {
+            res.redirect("/cohorts");
+        }
     });
 });
 
