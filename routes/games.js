@@ -68,4 +68,20 @@
 // });
 
 
+// /**
+//  * Create New Item
+//  *
+//  * @return response()
+//  */
+//  router.post('/', (req, res) => {
+//     let data = { name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.turns, number_seconds: req.body.seconds, points_toggle: req.body.toggle_points, points_endpoint: req.body.endpoint_points };
+//     let sqlQuery = "INSERT INTO cohorts SET ?";
+//     let query = conn.query(sqlQuery, data, (err, results) => {
+//         if (err) throw err;
+//         res.send("cohort added");
+//         res.end();
+//     });
+// });
+
+
 // module.exports = router

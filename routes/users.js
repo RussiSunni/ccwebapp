@@ -42,7 +42,7 @@ router.get('/', (req, res) => {
     let sqlQuery = "SELECT * FROM users";
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
-        res.render('list-users', { students: results });
+        res.render('list-users');
     });
 });
 

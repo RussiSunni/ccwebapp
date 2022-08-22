@@ -26,24 +26,51 @@
             <div class="col-sm-4" style="border:1px solid blue;">
                 <h1>Add Student</h1>
 
-                <form action="/users" method="POST">
+                <form action="/users/add" method="POST">
                     <div class="mb-3">
                         <label for="name">Name</label>
                         <input type="text" placeholder="name" name="name" class="form-control">
                     </div>
                     <div class="mb-3"> <label for="username">Username</label>
-                        <input type="text" placeholder="username" name="user_name" class="form-control">
+                        <input type="text" placeholder="username" name="username" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" placeholder="email address" class="form-control" name="email">
                     </div>
                     <div class="mb-3"> <label for="username">DOB</label>
-                        <input type="text" placeholder="DOB" name="dob" class="form-control">
+                        <input type="date" placeholder="DOB" name="dob" class="form-control">
                     </div>
-                    <div class="mb-3"> <input type="text" placeholder="cohort" name="cohort" class="form-control">
+                    <div class="mb-3">
+                        <label for="username">Cohort</label>
+                        <label for="cars">Choose a cohort:</label>
+                        <select class="form-select" id="cohort" name="cohort">
+                            <option>Choose a cohort</option>>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        // Script for the drop-down list
+        var url = "/cohorts/list";
+        // get the rows from the SQL query
+        $.get(url, function (data, status) {
+            var select = document.getElementById("cohort");
+            var options = data;
+
+            for (var i = 0; i < options.length; i++) {
+                var opt = options[i];
+                var el = document.createElement("option");
+                el.textContent = opt.name;
+                el.value = opt.id;
+                select.appendChild(el);
+            }
+        });
+    </script>
 </body>
 
 </html>

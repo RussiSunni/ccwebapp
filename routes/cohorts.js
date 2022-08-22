@@ -43,8 +43,8 @@ router.get('/add', (req, res) => {
  *
  * @return response()
  */
-router.post('/', (req, res) => {
-    let data = { name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.turns, number_seconds: req.body.seconds, points_toggle: req.body.toggle_points, points_endpoint: req.body.endpoint_points };
+router.post('/add', (req, res) => {
+    let data = { name: req.body.name };
     let sqlQuery = "INSERT INTO cohorts SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) throw err;
@@ -103,6 +103,21 @@ WHERE conscious_coding.cohorts.id = ` + req.params.id + ";";
         res.json(results);
     });
 })
+
+
+/**
+ * Get All User From a Cohort
+ *
+ * @return response()
+ */
+router.get('/:id/users', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sqlQuery = "SELECT * FROM users WHERE cohort_id=" + req.params.id;
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
 
 
 

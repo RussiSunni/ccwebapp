@@ -33,51 +33,47 @@
             </div>
             <div class="col-sm-2">
                 <label for="cars">Choose a cohort:</label>
-                <form>
-                    <select class="form-select" id="cohorts" name="cohorts">
-                        <option>Choose a cohort</option>>
-                    </select>
-                    <button class="btn btn-primary" type="submit" onclick="chooseCohort()">Submit</button>
-                </form>
+                <select class="form-select" id="cohorts" name="cohorts">
+                    <option>Choose a cohort</option>>
+                </select>
+                <button class="btn btn-primary" type="submit" onclick="ChooseCohort()">Submit</button>
             </div>
         </div>
-        <table class="table">
-            <tr>
-                <th></th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>DOB</th>
-                <th>Cohort</th>
-                <th>Admin</th>
-                <th>Login Link</th>
-                <th>Last Login</th>
-                <th></th>
-            </tr>
-            <% for(var i=0; i<students.length; i++) {%>
+
+        <table id="userTable" class="table">
+            <thead>
                 <tr>
-                    <td>1</td>
-                    <td>
-                        <%= students[i].email %>
-                    </td>
-                    <td>
-                        <%= students[i].name %>
-                    </td>
-                    <td>
-                        <%= students[i].username %>
-                    </td>
-                    <td>
-                        <%= students[i].dob %>
-                    </td>
-                    <td>1</td>
-                    <td>
-                        <%= students[i].is_admin %>
-                    </td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
+                    <th></th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>DOB</th>
+                    <th>Cohort</th>
+                    <th>Admin</th>
+                    <th>Login Link</th>
+                    <th>Last Login</th>
+                    <th></th>
                 </tr>
-                <% } %>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td id="email">
+                    </td>
+                    <td id="name">
+                    </td>
+                    <td id="username">
+                    </td>
+                    <td id="dob">
+                    </td>
+                    <td></td>
+                    <td>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
@@ -86,8 +82,6 @@
         var url = "/cohorts/list";
         // get the rows from the SQL query
         $.get(url, function (data, status) {
-            console.log(data);
-
             var select = document.getElementById("cohorts");
             var options = data;
 
@@ -99,6 +93,31 @@
                 select.appendChild(el);
             }
         });
+
+        function ChooseCohort() {
+            let cohortId = document.getElementById('cohorts').value;
+            var url = "/cohorts/" + cohortId + "/users";
+
+            // get the rows from the SQL query
+            $.get(url, function (data, status) {
+                var table = document.getElementById("userTable");
+
+                for (var i = 0; i < data.length; i++) {
+                    var row = table.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    cell1.innerHTML = " ";
+                    cell2.innerHTML = data[i].email;
+                    cell3.innerHTML = data[i].name;
+                    cell4.innerHTML = data[i].username;
+                    cell5.innerHTML = data[i].dob;
+                }
+
+            });
+        }
     </script>
 
 </body>
