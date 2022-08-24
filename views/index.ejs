@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Concious Coding</title>
-	<link rel="stylesheet" href="/stylesheets/style.css">
 	<!-- CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -15,14 +14,33 @@
 		integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
 		crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
 <body>
-	<div class="topnav">
-		<a class="active" href="/">Create Game</a>
-		<a href="/users">Users</a>
-		<a href="/cohorts">Cohorts</a>
-	</div>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">Conscious Coding</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/">Create Game</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/users">Users</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/cohorts">Cohorts</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 
 	<div class="container-fluid">
@@ -35,11 +53,11 @@
 				<select class="form-select" id="cohorts" name="cohorts">
 					<option>Choose a cohort</option>>
 				</select>
-				<button class="btn btn-primary" type="submit" onclick="chooseCohort()">Submit</button>
+				<button class="btn brand-button" type="submit" onclick="chooseCohort()">Submit</button>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-2" style="border:1px solid blue;">
+			<div class="col-sm-2 brand-border">
 				<h2>Game Settings</h2>
 				<p><strong>Game type = Pathways</strong></p>
 				<form action="/cohorts" method="POST">
@@ -69,13 +87,19 @@
 						<input id="endpoint_points" type="number" placeholder="Points per endpoint"
 							name="endpoint_points" class="form-control">
 					</div>
-					<button class="btn btn-primary" type="submit">Submit</button>
+					<button class="btn brand-button" type="submit">Submit</button>
 				</form>
+				<button class="btn brand-button" onclick="Test()">Test</button>
 			</div>
-			<div class="col-sm-8" style="border:1px solid blue; min-height: 700px;">
-				<p>will drag the players here</p>
+
+			<div id="teams" class="col-sm-8 brand-border" style="min-height: 700px;">
+				<h2>Teams</h2>
+				<button class="btn brand-button" onclick="CreateNewTeam()">New</button>
+				<div id="yellow_team" class="brand-border team_box" ondrop="drop_handler(event);"
+					ondragover="dragover_handler(event);"></div>
+
 			</div>
-			<div class="col-sm-2" style="border:1px solid blue; min-height: 700px;">
+			<div class="col-sm-2 brand-border" style="min-height: 700px;">
 				<table id="userTable" class="table">
 					<tbody>
 					</tbody>
@@ -84,8 +108,6 @@
 
 		</div>
 	</div>
-
-
 	<script>
 		// Script for the drop-down list
 		var url = "/cohorts/list";
@@ -104,6 +126,7 @@
 			}
 		});
 
+		let teamBox = document.getElementById('teamBox');
 
 		function chooseCohort() {
 			let cohortId = document.getElementById('cohorts').value;
@@ -115,11 +138,85 @@
 				var table = document.getElementById("userTable");
 
 				for (var i = 0; i < data.length; i++) {
+					// Create table cells.
 					var row = table.insertRow(0);
-					var cell1 = row.insertCell(0);
-					cell1.innerHTML = data[i].name;
+					var cell = row.insertCell(0);
+
+					// Create div inside cell.
+					const div = document.createElement("div");
+					div.setAttribute("draggable", "true");
+					div.classList.add("brand-border");
+					div.setAttribute("id", "src_move" + [i]);
+					div.setAttribute("ondragstart", "dragstart_handler(event);");
+					div.setAttribute("ondragend", "dragend_handler(event);");
+
+					cell.appendChild(div);
+					div.innerHTML = data[i].name;
 				}
 			});
+		}
+
+		// ---
+
+		function dragstart_handler(ev) {
+			console.log("dragStart");
+			// Change the source element's background color to signify drag has started
+			ev.currentTarget.style.border = "dashed";
+			// Add the id of the drag source element to the drag data payload so
+			// it is available when the drop event is fired
+			ev.dataTransfer.setData("text", ev.target.id);
+			// Tell the browser only move is possible
+			ev.effectAllowed = "move";
+		}
+		function dragover_handler(ev) {
+			console.log("dragOver");
+			// Change the target element's border to signify a drag over event
+			// has occurred
+			ev.currentTarget.style.background = "lightblue";
+			ev.preventDefault();
+		}
+		function drop_handler(ev) {
+			console.log("Drop");
+			ev.preventDefault();
+			// Get the id of drag source element (that was added to the drag data
+			// payload by the dragstart event handler)
+			var id = ev.dataTransfer.getData("text");
+			// Only Move the element if the source and destination ids are both "move"
+			// if (id == "src_move" && ev.target.id == "dest_move") {
+			// 	ev.target.appendChild(document.getElementById(id));
+			// }
+			if (ev.target.id == "yellow_team" || ev.target.id == "blue_team") {
+				ev.target.appendChild(document.getElementById(id));
+			}
+		}
+		function dragend_handler(ev) {
+			console.log("dragEnd");
+			// Restore source's border
+			ev.target.style.border = "solid black";
+			// Remove all of the drag data
+			ev.dataTransfer.clearData();
+		}
+
+		let numTeams = 1;
+
+		function CreateNewTeam() {
+			numTeams++;
+			let teamsDiv = document.getElementById('teams');
+			const div = document.createElement("div");
+			div.classList.add("brand-border");
+			if (numTeams == 2) {
+				div.setAttribute("id", "blue_team");
+			}
+			div.setAttribute("style", "min-height: 100px;");
+			div.setAttribute("ondrop", "drop_handler(event);");
+			div.setAttribute("ondragover", "dragover_handler(event);");
+
+			div.setAttribute("ondragstart", "dragstart_handler(event);");
+			teamsDiv.append(div);
+		}
+
+		function Test() {
+			console.log("test");
 		}
 	</script>
 </body>
