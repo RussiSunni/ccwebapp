@@ -57,10 +57,11 @@
 			</div>
 		</div>
 		<div class="row">
+
 			<div class="col-sm-2 brand-border">
 				<h2>Game Settings</h2>
 				<p><strong>Game type = Pathways</strong></p>
-				<form action="/cohorts" method="POST">
+				<form action="/games/add" method="POST">
 					<div class="mb-3">
 						<label for="name">Name</label>
 						<input id="name" type="string" placeholder="name" name="name" class="form-control">
@@ -70,8 +71,8 @@
 						<input id="rounds" type="number" placeholder="rounds" name="rounds" class="form-control">
 					</div>
 					<div class="mb-3">
-						<label for="turns">Turns per round</label>
-						<input id="turns" type="number" placeholder="turns" name="turns" class="form-control">
+						<label for="moves">Moves per round</label>
+						<input id="moves" type="number" placeholder="moves" name="moves" class="form-control">
 					</div>
 					<div class="mb-3">
 						<label for="seconds">Seconds per round</label>
@@ -87,16 +88,28 @@
 						<input id="endpoint_points" type="number" placeholder="Points per endpoint"
 							name="endpoint_points" class="form-control">
 					</div>
-					<button class="btn brand-button" type="submit">Submit</button>
+					<button class="btn brand-button" type="submit">Create Game</button>
 				</form>
-				<button class="btn brand-button" onclick="Test()">Test</button>
+				<button class="btn brand-button mt-3" onclick="CreateTeams()">Create Teams</button>
+				<h2>Existing Games</h2>
+				<table id="existing_games" class="table">
+					<tbody>
+					</tbody>
+				</table>
 			</div>
 
 			<div id="teams" class="col-sm-8 brand-border" style="min-height: 700px;">
 				<h2>Teams</h2>
 				<button class="btn brand-button" onclick="CreateNewTeam()">New</button>
-				<div id="yellow_team" class="brand-border team_box" ondrop="drop_handler(event);"
-					ondragover="dragover_handler(event);"></div>
+				<div id="teamsInner">
+					<div id="yellow_team" class="brand-border team_box" ondrop="drop_handler(event);"
+						ondragover="dragover_handler(event);"></div>
+					<div id="blue_team" class="brand-border team_box" ondrop="drop_handler(event);"
+						ondragover="dragover_handler(event);"></div>
+
+					<button class="btn brand-button">Set active</button>
+				</div>
+
 
 			</div>
 			<div class="col-sm-2 brand-border" style="min-height: 700px;">
@@ -106,119 +119,164 @@
 				</table>
 			</div>
 
+
 		</div>
-	</div>
-	<script>
-		// Script for the drop-down list
-		var url = "/cohorts/list";
-		// get the rows from the SQL query
-		$.get(url, function (data, status) {
-
-			var select = document.getElementById("cohorts");
-			var options = data;
-
-			for (var i = 0; i < options.length; i++) {
-				var opt = options[i];
-				var el = document.createElement("option");
-				el.textContent = opt.name;
-				el.value = opt.id;
-				select.appendChild(el);
-			}
-		});
-
-		let teamBox = document.getElementById('teamBox');
-
-		function chooseCohort() {
-			let cohortId = document.getElementById('cohorts').value;
-
-			var url = "cohorts/" + cohortId + "/users";
-
+		<script>
+			// Script for the cohorts drop-down list
+			var url = "/cohorts/list";
 			// get the rows from the SQL query
 			$.get(url, function (data, status) {
-				var table = document.getElementById("userTable");
+				var select = document.getElementById("cohorts");
+				var options = data;
 
-				for (var i = 0; i < data.length; i++) {
-					// Create table cells.
-					var row = table.insertRow(0);
-					var cell = row.insertCell(0);
-
-					// Create div inside cell.
-					const div = document.createElement("div");
-					div.setAttribute("draggable", "true");
-					div.classList.add("brand-border");
-					div.setAttribute("id", "src_move" + [i]);
-					div.setAttribute("ondragstart", "dragstart_handler(event);");
-					div.setAttribute("ondragend", "dragend_handler(event);");
-
-					cell.appendChild(div);
-					div.innerHTML = data[i].name;
+				for (var i = 0; i < options.length; i++) {
+					var opt = options[i];
+					var el = document.createElement("option");
+					el.textContent = opt.name;
+					el.value = opt.id;
+					select.appendChild(el);
 				}
 			});
-		}
 
-		// ---
+			// Script for the existing games list
+			var url = "/games/list";
+			// get the rows from the SQL query
+			$.get(url, function (data, status) {
+				console.log(data);
 
-		function dragstart_handler(ev) {
-			console.log("dragStart");
-			// Change the source element's background color to signify drag has started
-			ev.currentTarget.style.border = "dashed";
-			// Add the id of the drag source element to the drag data payload so
-			// it is available when the drop event is fired
-			ev.dataTransfer.setData("text", ev.target.id);
-			// Tell the browser only move is possible
-			ev.effectAllowed = "move";
-		}
-		function dragover_handler(ev) {
-			console.log("dragOver");
-			// Change the target element's border to signify a drag over event
-			// has occurred
-			ev.currentTarget.style.background = "lightblue";
-			ev.preventDefault();
-		}
-		function drop_handler(ev) {
-			console.log("Drop");
-			ev.preventDefault();
-			// Get the id of drag source element (that was added to the drag data
-			// payload by the dragstart event handler)
-			var id = ev.dataTransfer.getData("text");
-			// Only Move the element if the source and destination ids are both "move"
-			// if (id == "src_move" && ev.target.id == "dest_move") {
-			// 	ev.target.appendChild(document.getElementById(id));
-			// }
-			if (ev.target.id == "yellow_team" || ev.target.id == "blue_team") {
-				ev.target.appendChild(document.getElementById(id));
+				var table = document.getElementById("existing_games");
+				for (var i = 0; i < data.length; i++) {
+					const button = document.createElement("button");
+					var row = table.insertRow(0);
+					var cell = row.insertCell(0);
+					button.innerHTML = data[i].name;
+					button.setAttribute("onclick", "ChooseTeam(this)");
+					button.setAttribute("data-game-id", data[i].id);
+					cell.appendChild(button);
+				}
+			});
+
+			// Press button to choose team.
+			function ChooseTeam(button) {
+				var teamsInner = document.getElementById("teamsInner");
+				teamsInner.style.display = "block";
+
+				var gameId = button.getAttribute("data-game-id");
+				var url = "/games/" + gameId;
+
+				// get the rows from the SQL query
+				$.get(url, function (data, status) {
+					console.log(data);
+
+				});
 			}
-		}
-		function dragend_handler(ev) {
-			console.log("dragEnd");
-			// Restore source's border
-			ev.target.style.border = "solid black";
-			// Remove all of the drag data
-			ev.dataTransfer.clearData();
-		}
 
-		let numTeams = 1;
+			let teamBox = document.getElementById('teamBox');
 
-		function CreateNewTeam() {
-			numTeams++;
-			let teamsDiv = document.getElementById('teams');
-			const div = document.createElement("div");
-			div.classList.add("brand-border");
-			if (numTeams == 2) {
-				div.setAttribute("id", "blue_team");
+			function chooseCohort() {
+				let cohortId = document.getElementById('cohorts').value;
+
+				var url = "cohorts/" + cohortId + "/users";
+
+				// get the rows from the SQL query
+				$.get(url, function (data, status) {
+					var table = document.getElementById("userTable");
+
+					for (var i = 0; i < data.length; i++) {
+						// Create table cells.
+						var row = table.insertRow(0);
+						var cell = row.insertCell(0);
+
+						// Create div inside cell.
+						const div = document.createElement("div");
+						div.setAttribute("draggable", "true");
+						div.classList.add("brand-border");
+						div.setAttribute("id", "src_move" + [i]);
+						div.setAttribute("ondragstart", "dragstart_handler(event);");
+						div.setAttribute("ondragend", "dragend_handler(event);");
+
+						cell.appendChild(div);
+						div.innerHTML = data[i].name;
+					}
+				});
 			}
-			div.setAttribute("style", "min-height: 100px;");
-			div.setAttribute("ondrop", "drop_handler(event);");
-			div.setAttribute("ondragover", "dragover_handler(event);");
 
-			div.setAttribute("ondragstart", "dragstart_handler(event);");
-			teamsDiv.append(div);
-		}
+			// ---
 
-		function Test() {
-			console.log("test");
-		}
-	</script>
+			function dragstart_handler(ev) {
+				console.log("dragStart");
+				// Change the source element's background color to signify drag has started
+				ev.currentTarget.style.border = "dashed";
+				// Add the id of the drag source element to the drag data payload so
+				// it is available when the drop event is fired
+				ev.dataTransfer.setData("text", ev.target.id);
+				// Tell the browser only move is possible
+				ev.effectAllowed = "move";
+			}
+			function dragover_handler(ev) {
+				console.log("dragOver");
+				// Change the target element's border to signify a drag over event
+				// has occurred
+				ev.currentTarget.style.background = "lightblue";
+				ev.preventDefault();
+			}
+			function drop_handler(ev) {
+				console.log("Drop");
+				ev.preventDefault();
+				// Get the id of drag source element (that was added to the drag data
+				// payload by the dragstart event handler)
+				var id = ev.dataTransfer.getData("text");
+				// Only Move the element if the source and destination ids are both "move"
+				// if (id == "src_move" && ev.target.id == "dest_move") {
+				// 	ev.target.appendChild(document.getElementById(id));
+				// }
+				if (ev.target.id == "yellow_team" || ev.target.id == "blue_team") {
+					ev.target.appendChild(document.getElementById(id));
+				}
+			}
+			function dragend_handler(ev) {
+				console.log("dragEnd");
+				// Restore source's border
+				ev.target.style.border = "solid black";
+				// Remove all of the drag data
+				ev.dataTransfer.clearData();
+			}
+
+			let numTeams = 1;
+
+			function CreateNewTeam() {
+
+				// will do later
+
+				// numTeams++;
+				// let teamsDiv = document.getElementById('teams');
+				// const div = document.createElement("div");
+				// div.classList.add("brand-border");
+				// if (numTeams == 2) {
+				// 	div.setAttribute("id", "blue_team");
+				// }
+				// div.setAttribute("style", "min-height: 100px;");
+				// div.setAttribute("ondrop", "drop_handler(event);");
+				// div.setAttribute("ondragover", "dragover_handler(event);");
+
+				// div.setAttribute("ondragstart", "dragstart_handler(event);");
+				// teamsDiv.append(div);
+			}
+
+			function CreateTeams() {
+				let yellowTeam = document.getElementById('yellow_team');
+				let yellowTeamChildNodes = yellowTeam.childNodes;
+				for (let i = 0; i < yellowTeamChildNodes.length; i++) {
+					console.log(yellowTeamChildNodes[i].innerHTML);
+				}
+
+				let blueTeam = document.getElementById('blue_team');
+				let blueTeamChildNodes = blueTeam.childNodes;
+				for (let i = 0; i < blueTeamChildNodes.length; i++) {
+					console.log(blueTeamChildNodes[i].innerHTML);
+				}
+			}
+		</script>
 </body>
 
 </html>
