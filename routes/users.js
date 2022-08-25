@@ -87,4 +87,20 @@ router.post('/add', (req, res) => {
     });
 });
 
+
+/**
+ * Update Item
+ *
+ * @return response()
+ */
+router.put('/:id', (req, res) => {
+    let sqlQuery = "UPDATE users SET login_link='" + req.body.login_link + "' WHERE id=" + req.params.id;
+
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.render('index');
+    });
+});
+
+
 module.exports = router

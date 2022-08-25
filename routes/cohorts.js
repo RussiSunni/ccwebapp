@@ -122,6 +122,20 @@ router.get('/:id/users', (req, res) => {
     });
 });
 
+/**
+ * Update Item
+ *
+ * @return response()
+ */
+router.put('/:id', (req, res) => {
+    let sqlQuery = "UPDATE cohorts SET game='" + req.body.game + "' WHERE id=" + req.params.id;
+
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.render('index');
+    });
+});
+
 
 
 

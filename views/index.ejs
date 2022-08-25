@@ -107,7 +107,7 @@
 					<div id="blue_team" class="brand-border team_box" ondrop="drop_handler(event);"
 						ondragover="dragover_handler(event);"></div>
 
-					<button class="btn brand-button">Set active</button>
+					<button class="btn brand-button" onclick="SetGameActive()">Set active</button>
 				</div>
 
 
@@ -172,9 +172,10 @@
 			}
 
 			let teamBox = document.getElementById('teamBox');
+			var cohortId;
 
 			function chooseCohort() {
-				let cohortId = document.getElementById('cohorts').value;
+				cohortId = document.getElementById('cohorts').value;
 
 				var url = "cohorts/" + cohortId + "/users";
 
@@ -196,6 +197,7 @@
 						div.setAttribute("ondragend", "dragend_handler(event);");
 
 						cell.appendChild(div);
+						div.setAttribute("data-user-id", data[i].id);
 						div.innerHTML = data[i].name;
 					}
 				});
@@ -263,18 +265,46 @@
 				// teamsDiv.append(div);
 			}
 
-			function CreateTeams() {
+			function SetGameActive() {
 				let yellowTeam = document.getElementById('yellow_team');
 				let yellowTeamChildNodes = yellowTeam.childNodes;
 				for (let i = 0; i < yellowTeamChildNodes.length; i++) {
-					console.log(yellowTeamChildNodes[i].innerHTML);
+					let userId = yellowTeamChildNodes[i].getAttribute("data-user-id");
+
+					// Update the users table.
+					let data = { "login_link": "testLink" }
+
+					$.ajax({
+						url: '/users/' + userId,
+						type: 'PUT',
+						contentType: 'application/json',
+						data: JSON.stringify(data), // access in body
+						success: function (data) {
+							console.log('Load was performed.');
+						}
+					});
 				}
 
 				let blueTeam = document.getElementById('blue_team');
 				let blueTeamChildNodes = blueTeam.childNodes;
 				for (let i = 0; i < blueTeamChildNodes.length; i++) {
-					console.log(blueTeamChildNodes[i].innerHTML);
+					console.log(blueTeamChildNodes[i].getAttribute("data-user-id"));
 				}
+
+
+				// Update the cohorts table.
+				let data = { "game": "Pathways" }
+				$.ajax({
+					url: '/cohorts/' + cohortId,
+					type: 'PUT',
+					contentType: 'application/json',
+					data: JSON.stringify(data), // access in body
+					success: function (data) {
+						console.log('Load was performed.');
+					}
+				});
+
+
 			}
 		</script>
 </body>
