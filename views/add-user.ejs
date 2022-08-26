@@ -88,6 +88,10 @@
                 el.value = opt.id;
                 select.appendChild(el);
             }
+
+            if (sessionStorage.getItem("cohortId") != "") {
+                select.value = sessionStorage.getItem("cohortId");
+            }
         });
     </script>
 </body>

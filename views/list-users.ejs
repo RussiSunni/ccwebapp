@@ -17,6 +17,9 @@
 </head>
 
 <body>
+
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Conscious Coding</a>
@@ -93,18 +96,23 @@
                 el.value = opt.id;
                 select.appendChild(el);
             }
+
+            if (sessionStorage.getItem("cohortId") != "") {
+                select.value = sessionStorage.getItem("cohortId");
+                ChooseCohort();
+            }
         });
 
         function ChooseCohort() {
             let cohortId = document.getElementById('cohorts').value;
-            var url = "/cohorts/" + cohortId + "/users";
 
+            // Store the cohort id across pages;
+            sessionStorage.setItem("cohortId", cohortId);
+
+            var url = "/cohorts/" + cohortId + "/users";
             // get the rows from the SQL query
             $.get(url, function (data, status) {
                 var table = document.getElementById("userTable");
-
-                console.log(data);
-
                 for (var i = 0; i < data.length; i++) {
                     var row = table.insertRow(1);
                     var cell1 = row.insertCell(0);

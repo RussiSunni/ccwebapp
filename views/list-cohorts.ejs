@@ -44,6 +44,17 @@
         <a href="/cohorts/add" class="btn brand-button" role="button">Add cohort</a>
 
         <h1>Cohort List</h1>
+        <div class="row">
+            <div class="col-sm-10">
+            </div>
+            <div class="col-sm-2">
+                <label for="cars">Choose a cohort:</label>
+                <select class="form-select" id="cohorts" name="cohorts">
+                    <option>Choose a cohort</option>>
+                </select>
+                <button class="btn brand-button" type="submit" onclick="ChooseCohort()">Submit</button>
+            </div>
+        </div>
         <table class="table">
             <tr>
                 <th></th>
@@ -72,7 +83,33 @@
         </table>
     </div>
 
+    <script>
+        // Script for the drop-down list
+        var url = "/cohorts/list";
+        // get the rows from the SQL query
+        $.get(url, function (data, status) {
+            var select = document.getElementById("cohorts");
+            var options = data;
 
+            for (var i = 0; i < options.length; i++) {
+                var opt = options[i];
+                var el = document.createElement("option");
+                el.textContent = opt.name;
+                el.value = opt.id;
+                select.appendChild(el);
+            }
+
+            if (sessionStorage.getItem("cohortId") != "") {
+                select.value = sessionStorage.getItem("cohortId");
+            }
+        });
+
+        function ChooseCohort() {
+            let cohortId = document.getElementById('cohorts').value;
+            // Store the cohort id across pages;
+            sessionStorage.setItem("cohortId", cohortId);
+        }
+    </script>
 </body>
 
 </html>
