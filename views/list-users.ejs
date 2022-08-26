@@ -103,6 +103,8 @@
             $.get(url, function (data, status) {
                 var table = document.getElementById("userTable");
 
+                console.log(data);
+
                 for (var i = 0; i < data.length; i++) {
                     var row = table.insertRow(1);
                     var cell1 = row.insertCell(0);
@@ -111,6 +113,9 @@
                     var cell4 = row.insertCell(3);
                     var cell5 = row.insertCell(4);
                     var cell6 = row.insertCell(5);
+                    var cell7 = row.insertCell(6);
+                    var cell8 = row.insertCell(7);
+                    var cell9 = row.insertCell(8);
                     var button = document.createElement("button");
                     button.innerHTML = "edit";
                     cell1.appendChild(button);
@@ -118,6 +123,11 @@
                     cell3.innerHTML = data[i].name;
                     cell4.innerHTML = data[i].username;
                     cell5.innerHTML = data[i].dob;
+                    var a = document.createElement("a");
+                    cell9.appendChild(a);
+                    a.setAttribute("href", data[i].login_link);
+                    a.setAttribute("target", "_blank");
+                    a.innerHTML = data[i].login_link;
                 }
             });
         }

@@ -150,25 +150,19 @@
 					var row = table.insertRow(0);
 					var cell = row.insertCell(0);
 					button.innerHTML = data[i].name;
-					button.setAttribute("onclick", "ChooseTeam(this)");
+					button.setAttribute("onclick", "ChooseGame(this)");
 					button.setAttribute("data-game-id", data[i].id);
 					cell.appendChild(button);
 				}
 			});
 
+			var gameId;
+
 			// Press button to choose team.
-			function ChooseTeam(button) {
+			function ChooseGame(button) {
 				var teamsInner = document.getElementById("teamsInner");
 				teamsInner.style.display = "block";
-
-				var gameId = button.getAttribute("data-game-id");
-				var url = "/games/" + gameId;
-
-				// get the rows from the SQL query
-				$.get(url, function (data, status) {
-					console.log(data);
-
-				});
+				gameId = button.getAttribute("data-game-id");
 			}
 
 			let teamBox = document.getElementById('teamBox');
@@ -266,45 +260,81 @@
 			}
 
 			function SetGameActive() {
-				let yellowTeam = document.getElementById('yellow_team');
-				let yellowTeamChildNodes = yellowTeam.childNodes;
-				for (let i = 0; i < yellowTeamChildNodes.length; i++) {
-					let userId = yellowTeamChildNodes[i].getAttribute("data-user-id");
+				let url = "/games/" + gameId;
+				let game = {};
 
-					// Update the users table.
-					let data = { "login_link": "testLink" }
+				game.gameType = "Pathways";
 
-					$.ajax({
-						url: '/users/' + userId,
-						type: 'PUT',
-						contentType: 'application/json',
-						data: JSON.stringify(data), // access in body
-						success: function (data) {
-							console.log('Load was performed.');
-						}
-					});
-				}
+				// get the rows from the SQL query
+				$.get(url, function (data, status) {
+					console.log(data[0].points_endpoint);
 
-				let blueTeam = document.getElementById('blue_team');
-				let blueTeamChildNodes = blueTeam.childNodes;
-				for (let i = 0; i < blueTeamChildNodes.length; i++) {
-					console.log(blueTeamChildNodes[i].getAttribute("data-user-id"));
-				}
+					console.log(game);
+
+					game.numberOfMoves = data[0].number_moves;
+					game.numberOfRounds = data[0].number_rounds;
+					game.numberOfSeconds = data[0].number_seconds;
+					game.pointsPerEndpoint = data[0].points_endpoint;
+					game.pointsPerToggle = data[0].points_toggle;
 
 
-				// Update the cohorts table.
-				let data = { "game": "Pathways" }
-				$.ajax({
-					url: '/cohorts/' + cohortId,
-					type: 'PUT',
-					contentType: 'application/json',
-					data: JSON.stringify(data), // access in body
-					success: function (data) {
-						console.log('Load was performed.');
+					let yellowTeam = document.getElementById('yellow_team');
+					let yellowTeamChildNodes = yellowTeam.childNodes;
+					for (let i = 0; i < yellowTeamChildNodes.length; i++) {
+						let userName = yellowTeamChildNodes[i].innerHTML;
+						let userId = yellowTeamChildNodes[i].getAttribute("data-user-id");
+						game.team = "Yellow";
+
+						let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
+						loginLink = loginLink + "nick_name=" + userName + "&team=" + game.team
+							+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
+							"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
+
+						console.log(loginLink);
+
+						// Update the users table.
+						let data1 = { "login_link": loginLink }
+
+						$.ajax({
+							url: '/users/' + userId,
+							type: 'PUT',
+							contentType: 'application/json',
+							data: JSON.stringify(data1), // access in body
+							success: function (data1) {
+								console.log('Load was performed.');
+							}
+						});
 					}
+
+					let blueTeam = document.getElementById('blue_team');
+					let blueTeamChildNodes = blueTeam.childNodes;
+					for (let i = 0; i < blueTeamChildNodes.length; i++) {
+						let userName = blueTeamChildNodes[i].innerHTML;
+						let userId = blueTeamChildNodes[i].getAttribute("data-user-id");
+						game.team = "Blue";
+
+						let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
+						loginLink = loginLink + "nick_name=" + userName + "&team=" + game.team
+							+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
+							"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
+
+						console.log(loginLink);
+
+						// Update the users table.
+						let data2 = { "login_link": loginLink }
+
+						$.ajax({
+							url: '/users/' + userId,
+							type: 'PUT',
+							contentType: 'application/json',
+							data: JSON.stringify(data2), // access in body
+							success: function (data2) {
+								console.log('Load was performed.');
+							}
+						});
+					}
+
 				});
-
-
 			}
 		</script>
 </body>
