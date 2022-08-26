@@ -12,8 +12,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    //password: 'C0nsc!0u5C0d!ng2022',
-    password: '',
+    password: 'C0nsc!0u5C0d!ng2022',
+    //password: '',
     database: 'conscious_coding'
 });
 
