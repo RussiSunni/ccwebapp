@@ -49,7 +49,7 @@
 			<div class="col-sm-10">
 			</div>
 			<div class="col-sm-2">
-				<label for="cars">Choose a cohort:</label>
+				<label for="cohorts">Choose a cohort:</label>
 				<select class="form-select" id="cohorts" name="cohorts">
 					<option>Choose a cohort</option>>
 				</select>
@@ -60,8 +60,11 @@
 
 			<div class="col-sm-2 brand-border">
 				<h2>Game Settings</h2>
-				<p><strong>Game type = Pathways</strong></p>
 				<form action="/games/add" method="POST">
+					<label for="game-types">Game type</label>
+					<select class="form-select" id="game_type" name="game_type">
+						<option>Choose a game type</option>>
+					</select>
 					<div class="mb-3">
 						<label for="name">Name</label>
 						<input id="name" type="string" placeholder="name" name="name" class="form-control">
@@ -90,7 +93,6 @@
 					</div>
 					<button class="btn brand-button" type="submit">Create Game</button>
 				</form>
-				<button class="btn brand-button mt-3" onclick="CreateTeams()">Create Teams</button>
 				<h2>Existing Games</h2>
 				<table id="existing_games" class="table">
 					<tbody>
@@ -122,10 +124,29 @@
 
 		</div>
 		<script>
-			// Script for the cohorts drop-down list
-			var url = "/cohorts/list";
+			// Script for the game-types drop-down list
+			var gameTypesUrl = "/game-types/list";
 			// get the rows from the SQL query
-			$.get(url, function (data, status) {
+			$.get(gameTypesUrl, function (data, status) {
+				var select = document.getElementById("game_type");
+				var options = data;
+
+				console.log(data);
+
+				for (var i = 0; i < options.length; i++) {
+					var opt = options[i];
+					var el = document.createElement("option");
+					el.textContent = opt.name;
+					el.value = opt.id;
+					select.appendChild(el);
+				}
+			});
+
+
+			// Script for the cohorts drop-down list
+			var cohortsUrl = "/cohorts/list";
+			// get the rows from the SQL query
+			$.get(cohortsUrl, function (data, status) {
 				var select = document.getElementById("cohorts");
 				var options = data;
 
@@ -145,9 +166,9 @@
 
 
 			// Script for the existing games list
-			var url = "/games/list";
+			var gamesUrl = "/games/list";
 			// get the rows from the SQL query
-			$.get(url, function (data, status) {
+			$.get(gamesUrl, function (data, status) {
 
 				var table = document.getElementById("existing_games");
 				for (var i = 0; i < data.length; i++) {
@@ -178,10 +199,10 @@
 				// Store the cohort id across pages;
 				sessionStorage.setItem("cohortId", cohortId);
 
-				var url = "cohorts/" + cohortId + "/users";
+				var usersInCohortUrl = "/cohorts/" + cohortId + "/users";
 
 				// get the rows from the SQL query
-				$.get(url, function (data, status) {
+				$.get(usersInCohortUrl, function (data, status) {
 					var table = document.getElementById("userTable");
 
 					for (var i = 0; i < data.length; i++) {
@@ -247,43 +268,20 @@
 
 			let numTeams = 1;
 
-			function CreateNewTeam() {
-
-				// will do later
-
-				// numTeams++;
-				// let teamsDiv = document.getElementById('teams');
-				// const div = document.createElement("div");
-				// div.classList.add("brand-border");
-				// if (numTeams == 2) {
-				// 	div.setAttribute("id", "blue_team");
-				// }
-				// div.setAttribute("style", "min-height: 100px;");
-				// div.setAttribute("ondrop", "drop_handler(event);");
-				// div.setAttribute("ondragover", "dragover_handler(event);");
-
-				// div.setAttribute("ondragstart", "dragstart_handler(event);");
-				// teamsDiv.append(div);
-			}
-
 			function SetGameActive() {
-				let url = "/games/" + gameId;
+				let gameUrl = "/games/" + gameId;
 				let game = {};
 
-				game.gameType = "Pathways";
-
 				// get the rows from the SQL query
-				$.get(url, function (data, status) {
+				$.get(gameUrl, function (data, status) {
 					console.log(data[0].points_endpoint);
-
-					console.log(game);
 
 					game.numberOfMoves = data[0].number_moves;
 					game.numberOfRounds = data[0].number_rounds;
 					game.numberOfSeconds = data[0].number_seconds;
 					game.pointsPerEndpoint = data[0].points_endpoint;
 					game.pointsPerToggle = data[0].points_toggle;
-
+					game.gameType = data[0].game_type;
 
 					let yellowTeam = document.getElementById('yellow_team');
 					let yellowTeamChildNodes = yellowTeam.childNodes;

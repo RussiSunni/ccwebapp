@@ -10,8 +10,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    //password: '',
     password: 'C0nsc!0u5C0d!ng2022',
+    //password: '',
     database: 'conscious_coding'
 });
 
@@ -30,47 +30,16 @@ conn.connect((err) => {
     }
 });
 
+
 /**
- * Create New Item
+ * Get All Items
  *
  * @return response()
  */
-router.post('/add', (req, res) => {
-    let data = {
-        name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.turns,
-        number_seconds: req.body.seconds, points_toggle: req.body.toggle_points,
-        points_endpoint: req.body.endpoint_points, game_type: req.body.game_type
-    };
-    let sqlQuery = "INSERT INTO games SET ?";
-    let query = conn.query(sqlQuery, data, (err, results) => {
-        if (err) throw err;
-        res.render('index');
-    });
-});
-
-
-/**
- * Get All Games
- *
- * @return response() 
- */
 router.get('/list', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    let sqlQuery = "SELECT * FROM games";
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.json(results);
-    });
-});
+    let sqlQuery = "SELECT * FROM game_types";
 
-/**
- * Get One Game
- *
- * @return response() 
- */
-router.get('/:id', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    let sqlQuery = "SELECT * FROM games WHERE id=" + req.params.id;
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
         res.json(results);

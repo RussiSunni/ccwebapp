@@ -31,4 +31,7 @@ app.use('/cohorts', cohortRouter)
 const gamesRouter = require('./routes/games')
 app.use('/games', gamesRouter)
 
+const gameTypesRouter = require('./routes/game-types')
+app.use('/game-types', gameTypesRouter)
+
 app.listen(3000)
