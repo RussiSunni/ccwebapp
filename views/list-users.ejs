@@ -50,6 +50,7 @@
 
             <h1>Student List</h1>
             <div class="col-sm-10">
+                <a id="public_links" href="#" target="_blank">Public link</a>
             </div>
             <div class="col-sm-2">
                 <label for="cars">Choose a cohort:</label>
@@ -72,7 +73,6 @@
                     <th>Admin</th>
                     <th>Login Link</th>
                     <th>Last Login</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -82,6 +82,10 @@
     </div>
 
     <script>
+        //Populate the "public links" link.
+        let publicLinksLink = document.getElementById('public_links');
+        publicLinksLink.setAttribute("href", "/cohorts/" + sessionStorage.getItem("cohortId") + "/public-links");
+
         // Script for the drop-down list
         var url = "/cohorts/list";
         // get the rows from the SQL query
@@ -132,10 +136,10 @@
                     cell4.innerHTML = data[i].username;
                     cell5.innerHTML = data[i].dob;
                     var a = document.createElement("a");
-                    cell9.appendChild(a);
+                    cell8.appendChild(a);
                     a.setAttribute("href", data[i].login_link);
                     a.setAttribute("target", "_blank");
-                    a.innerHTML = data[i].login_link;
+                    a.innerHTML = "Link";
                 }
             });
         }

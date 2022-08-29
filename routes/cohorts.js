@@ -1,7 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
-
 const mysql = require('mysql');
 
 /*------------------------------------------
@@ -12,8 +10,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'C0nsc!0u5C0d!ng2022',
-    //password: '',
+    //password: 'C0nsc!0u5C0d!ng2022',
+    password: '',
     database: 'conscious_coding'
 });
 
@@ -30,7 +28,6 @@ conn.connect((err) => {
     else {
         console.log('Mysql connected...');
     }
-
 });
 
 // Add cohort
@@ -123,6 +120,19 @@ router.get('/:id/users', (req, res) => {
 });
 
 /**
+ * Cohort Users Public Links
+ *
+ * @return response()
+ */
+router.get('/:id/public-links', (req, res) => {
+    let sqlQuery = "SELECT * FROM users WHERE cohort_id =" + req.params.id;
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.render('public-link-users', { cohort_users: results });
+    });
+});
+
+/**
  * Update Item
  *
  * @return response()
@@ -135,11 +145,5 @@ router.put('/:id', (req, res) => {
         res.render('index');
     });
 });
-
-
-
-
-
-
 
 module.exports = router
