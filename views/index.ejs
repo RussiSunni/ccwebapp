@@ -162,6 +162,10 @@
 					select.value = sessionStorage.getItem("cohortId");
 					chooseCohort();
 				}
+				else {
+					select.value = options[0].id;
+					chooseCohort();
+				}
 			});
 
 

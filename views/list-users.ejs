@@ -104,6 +104,10 @@
                 select.value = sessionStorage.getItem("cohortId");
                 ChooseCohort();
             }
+            else {
+                select.value = options[0].id;
+                chooseCohort();
+            }
         });
 
         function ChooseCohort() {

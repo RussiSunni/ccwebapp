@@ -99,8 +99,12 @@
                 select.appendChild(el);
             }
 
-            if (sessionStorage.getItem("cohortId") != "") {
+            if (sessionStorage.getItem("cohortId") != null && sessionStorage.getItem("cohortId") != "") {
                 select.value = sessionStorage.getItem("cohortId");
+            }
+            else {
+                select.value = options[0].id;
+                chooseCohort();
             }
         });
 
