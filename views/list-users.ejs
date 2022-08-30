@@ -67,7 +67,6 @@
                     <th></th>
                     <th>Email</th>
                     <th>Name</th>
-                    <th>Username</th>
                     <th>DOB</th>
                     <th>Cohort</th>
                     <th>Admin</th>
@@ -127,17 +126,15 @@
                     var cell6 = row.insertCell(5);
                     var cell7 = row.insertCell(6);
                     var cell8 = row.insertCell(7);
-                    var cell9 = row.insertCell(8);
                     var button = document.createElement("button");
                     button.innerHTML = "edit";
                     cell1.appendChild(button);
                     cell2.innerHTML = data[i].email;
                     cell3.innerHTML = data[i].name;
-                    cell4.innerHTML = data[i].username;
-                    cell5.innerHTML = data[i].dob;
-                    cell7.innerHTML = data[i].is_admin;
+                    cell4.innerHTML = data[i].dob;
+                    cell6.innerHTML = data[i].is_admin;
                     var a = document.createElement("a");
-                    cell8.appendChild(a);
+                    cell7.appendChild(a);
                     a.setAttribute("href", data[i].login_link);
                     a.setAttribute("target", "_blank");
                     a.innerHTML = "Link";

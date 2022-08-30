@@ -50,9 +50,6 @@
                         <label for="name">Name</label>
                         <input type="text" placeholder="name" name="name" class="form-control">
                     </div>
-                    <div class="mb-3"> <label for="username">Username</label>
-                        <input type="text" placeholder="username" name="username" class="form-control">
-                    </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
                         <input type="email" placeholder="email address" class="form-control" name="email">
@@ -61,11 +58,14 @@
                         <input type="date" placeholder="DOB" name="dob" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="username">Cohort</label>
-                        <label for="cars">Choose a cohort:</label>
+                        <label for="cohort">Cohort</label>
                         <select class="form-select" id="cohort" name="cohort">
                             <option>Choose a cohort</option>>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                          <input type="checkbox" id="is_admin" name="is_admin" value="1">
+                          <label for="is_admin">Is an admin?</label>
                     </div>
                     <button type="submit" class="btn brand-button">Submit</button>
                 </form>

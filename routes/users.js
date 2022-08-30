@@ -12,8 +12,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'C0nsc!0u5C0d!ng2022',
-    //password: '',
+    //password: 'C0nsc!0u5C0d!ng2022',
+    password: '',
     database: 'conscious_coding'
 });
 
@@ -75,7 +75,8 @@ router.get('/add', (req, res) => {
  * @return response()
  */
 router.post('/add', (req, res) => {
-    let data = { email: req.body.email, name: req.body.name, username: req.body.username, dob: req.body.dob, cohort_id: req.body.cohort };
+    let data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
+
     let sqlQuery = "INSERT INTO users SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) {
@@ -101,6 +102,7 @@ router.put('/:id', (req, res) => {
         res.render('index');
     });
 });
+
 
 
 module.exports = router
