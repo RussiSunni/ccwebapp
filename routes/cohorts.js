@@ -106,7 +106,7 @@ WHERE conscious_coding.cohorts.id = ` + req.params.id + ";";
 
 
 /**
- * Get All User From a Cohort
+ * Get All Users From a Cohort
  *
  * @return response()
  */
@@ -145,5 +145,21 @@ router.put('/:id', (req, res) => {
         res.render('index');
     });
 });
+
+
+/**
+ * Get All Games From a Cohort
+ *
+ * @return response()
+ */
+router.get('/:id/games', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sqlQuery = "SELECT * FROM games WHERE cohort_id=" + req.params.id;
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
 
 module.exports = router

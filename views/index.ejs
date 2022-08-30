@@ -61,6 +61,7 @@
 			<div class="col-sm-2 brand-border">
 				<h2>Game Settings</h2>
 				<form action="/games/add" method="POST">
+					<input type="hidden" id="cohort_id" name="cohort_id">
 					<label for="game-types">Game type</label>
 					<select class="form-select" id="game_type" name="game_type">
 						<option>Choose a game type</option>>
@@ -124,6 +125,8 @@
 
 		</div>
 		<script>
+			var currentCohortId;
+
 			// Script for the game-types drop-down list
 			var gameTypesUrl = "/game-types/list";
 			// get the rows from the SQL query
@@ -160,31 +163,40 @@
 
 				if (sessionStorage.getItem("cohortId") != null && sessionStorage.getItem("cohortId") != "") {
 					select.value = sessionStorage.getItem("cohortId");
+					currentCohortId = sessionStorage.getItem("cohortId");
+					// Populate hidden cohort input field in Create Game form.
+					document.getElementById("cohort_id").setAttribute("value", sessionStorage.getItem("cohortId"));
 					chooseCohort();
 				}
 				else {
 					select.value = options[0].id;
+					currentCohortId = options[0].id;
+					// Populate hidden cohort input field in Create Game form.
+					document.getElementById("cohort_id").setAttribute("value", options[0].id);
 					chooseCohort();
 				}
+
+				// Script for the existing games list
+				var gamesUrl = "/cohorts/" + currentCohortId + "/games";
+				ListGames(gamesUrl);
 			});
 
 
-			// Script for the existing games list
-			var gamesUrl = "/games/list";
-			// get the rows from the SQL query
-			$.get(gamesUrl, function (data, status) {
-
-				var table = document.getElementById("existing_games");
-				for (var i = 0; i < data.length; i++) {
-					const button = document.createElement("button");
-					var row = table.insertRow(0);
-					var cell = row.insertCell(0);
-					button.innerHTML = data[i].name;
-					button.setAttribute("onclick", "ChooseGame(this)");
-					button.setAttribute("data-game-id", data[i].id);
-					cell.appendChild(button);
-				}
-			});
+			function ListGames(gamesUrl) {
+				// get the rows from the SQL query
+				$.get(gamesUrl, function (data, status) {
+					var table = document.getElementById("existing_games");
+					for (var i = 0; i < data.length; i++) {
+						const button = document.createElement("button");
+						var row = table.insertRow(0);
+						var cell = row.insertCell(0);
+						button.innerHTML = data[i].name;
+						button.setAttribute("onclick", "ChooseGame(this)");
+						button.setAttribute("data-game-id", data[i].id);
+						cell.appendChild(button);
+					}
+				});
+			}
 
 			var gameId;
 
@@ -199,6 +211,7 @@
 			var cohortId;
 
 			function chooseCohort() {
+
 				cohortId = document.getElementById('cohorts').value;
 				// Store the cohort id across pages;
 				sessionStorage.setItem("cohortId", cohortId);
@@ -227,6 +240,7 @@
 						div.innerHTML = data[i].name;
 					}
 				});
+
 			}
 
 			// ---
