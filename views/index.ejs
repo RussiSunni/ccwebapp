@@ -211,16 +211,21 @@
 			var cohortId;
 
 			function chooseCohort() {
-
 				cohortId = document.getElementById('cohorts').value;
 				// Store the cohort id across pages;
 				sessionStorage.setItem("cohortId", cohortId);
+
+				// Refresh list of games.
+				$("#existing_games tbody tr").remove()
+				var gamesUrl = "/cohorts/" + cohortId + "/games";
+				ListGames(gamesUrl);
 
 				var usersInCohortUrl = "/cohorts/" + cohortId + "/users";
 
 				// get the rows from the SQL query
 				$.get(usersInCohortUrl, function (data, status) {
 					var table = document.getElementById("userTable");
+					$("#userTable tbody tr").remove()
 
 					for (var i = 0; i < data.length; i++) {
 						// Create table cells.
