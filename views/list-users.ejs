@@ -101,7 +101,7 @@
                 select.appendChild(el);
             }
 
-            if (sessionStorage.getItem("cohortId") != "") {
+            if (sessionStorage.getItem("cohortId") != null && sessionStorage.getItem("cohortId") != "") {
                 select.value = sessionStorage.getItem("cohortId");
                 ChooseCohort();
             }
