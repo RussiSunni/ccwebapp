@@ -104,5 +104,20 @@ router.put('/:id', (req, res) => {
 });
 
 
+/**
+ * Delete Item
+ *
+ * @return response()
+ */
+router.delete('/:id', (req, res) => {
+    let sqlQuery = "DELETE FROM users WHERE id=" + req.params.id;
+
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.render('list-users');
+    });
+});
+
+
 
 module.exports = router

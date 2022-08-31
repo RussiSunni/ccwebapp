@@ -72,6 +72,7 @@
                     <th>Admin</th>
                     <th>Login Link</th>
                     <th>Last Login</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -133,9 +134,10 @@
                     var cell6 = row.insertCell(5);
                     var cell7 = row.insertCell(6);
                     var cell8 = row.insertCell(7);
-                    var button = document.createElement("button");
-                    button.innerHTML = "edit";
-                    cell1.appendChild(button);
+                    var cell9 = row.insertCell(8);
+                    var button1 = document.createElement("button");
+                    button1.innerHTML = "edit";
+                    cell1.appendChild(button1);
                     cell2.innerHTML = data[i].email;
                     cell3.innerHTML = data[i].name;
                     cell4.innerHTML = data[i].dob;
@@ -145,9 +147,33 @@
                     a.setAttribute("href", data[i].login_link);
                     a.setAttribute("target", "_blank");
                     a.innerHTML = "Link";
+
+
+                    // work in progress
+                    var button2 = document.createElement("button");
+                    button2.innerHTML = "delete";
+
+                    button2.setAttribute("onclick", "DeleteUser(this)");
+                    button2.setAttribute("data-user-id", data[i].id);
+                    cell9.appendChild(button2);
                 }
             });
         }
+
+        function DeleteUser(button) {
+            userId = button.getAttribute("data-user-id");
+            var url = "/users/" + userId;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function () {
+                    window.location.reload();
+                }
+            });
+
+
+        }
+
     </script>
 
 </body>
