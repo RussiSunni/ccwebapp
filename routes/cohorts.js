@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override')
+
+router.use(bodyParser.json());
+router.use(methodOverride('_method'));
 
 /*------------------------------------------
 --------------------------------------------
@@ -129,6 +134,22 @@ router.get('/:id/public-links', (req, res) => {
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
         res.render('public-link-users', { cohort_users: results });
+    });
+});
+
+/**
+ * Delete Item
+ *
+ * @return response()
+ */
+router.delete('/:id/delete', (req, res, next) => {
+    let sqlQuery = "DELETE FROM cohorts WHERE id=" + req.params.id;
+
+    // need to cascade to delete relevant game and users.
+
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.redirect('/cohorts');
     });
 });
 

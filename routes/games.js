@@ -44,7 +44,7 @@ router.post('/add', (req, res) => {
     let sqlQuery = "INSERT INTO games SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) throw err;
-        res.render('index');
+        res.redirect('/');
     });
 });
 

@@ -125,6 +125,8 @@
             $.get(url, function (data, status) {
                 var tb = document.querySelector('#userTable tbody');
                 for (var i = 0; i < data.length; i++) {
+                    console.log(data);
+
                     var row = tb.insertRow(0);
                     var cell1 = row.insertCell(0);
                     var cell2 = row.insertCell(1);
@@ -135,12 +137,20 @@
                     var cell7 = row.insertCell(6);
                     var cell8 = row.insertCell(7);
                     var cell9 = row.insertCell(8);
-                    var button1 = document.createElement("button");
-                    button1.innerHTML = "edit";
-                    cell1.appendChild(button1);
+
+                    // Edit user button.
+                    var form1 = document.createElement("form");
+                    form1.setAttribute("action", "/users/" + data[i].id + "/edit");
+                    var input1 = document.createElement("input");
+                    input1.setAttribute("type", "submit");
+                    input1.setAttribute("value", "edit");
+                    form1.appendChild(input1);
+                    cell1.appendChild(form1);
+
                     cell2.innerHTML = data[i].email;
                     cell3.innerHTML = data[i].name;
-                    cell4.innerHTML = data[i].dob;
+                    var date = data[i].dob.substring(0, 10);
+                    cell4.innerHTML = date;
                     cell6.innerHTML = data[i].is_admin;
                     var a = document.createElement("a");
                     cell7.appendChild(a);
@@ -148,14 +158,12 @@
                     a.setAttribute("target", "_blank");
                     a.innerHTML = "Link";
 
-
-                    // work in progress
-                    var button2 = document.createElement("button");
-                    button2.innerHTML = "delete";
-
-                    button2.setAttribute("onclick", "DeleteUser(this)");
-                    button2.setAttribute("data-user-id", data[i].id);
-                    cell9.appendChild(button2);
+                    // Delete user button.              
+                    var button = document.createElement("button");
+                    button.innerHTML = "delete";
+                    button.setAttribute("onclick", "DeleteUser(this)");
+                    button.setAttribute("data-user-id", data[i].id);
+                    cell9.appendChild(button);
                 }
             });
         }
@@ -170,8 +178,6 @@
                     window.location.reload();
                 }
             });
-
-
         }
 
     </script>

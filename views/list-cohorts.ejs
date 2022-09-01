@@ -63,6 +63,7 @@
                 <th>Zoom</th>
                 <th>Game</th>
                 <th>Start Date</th>
+                <th></th>
             </tr>
             <% for(var i=0; i<cohorts.length; i++) {%>
                 <tr>
@@ -78,6 +79,11 @@
                     </td>
                     <td>1</td>
                     <td>1</td>
+                    <td>
+                        <form method="POST" action="/cohorts/<%=cohorts[i].id %>/delete?_method=DELETE">
+                            <input type="submit" value="delete" />
+                        </form>
+                    </td>
                 </tr>
                 <% } %>
         </table>
@@ -85,35 +91,24 @@
 
     <script>
         // Script for the drop-down list
-        var url = "/cohorts/list";
-        // get the rows from the SQL query
+        var url = " /cohorts/list"; // get the rows from the SQL query 
         $.get(url, function (data, status) {
-            var select = document.getElementById("cohorts");
-            var options = data;
-
-            for (var i = 0; i < options.length; i++) {
-                var opt = options[i];
-                var el = document.createElement("option");
-                el.textContent = opt.name;
-                el.value = opt.id;
-                select.appendChild(el);
-            }
-
-            if (sessionStorage.getItem("cohortId") != null && sessionStorage.getItem("cohortId") != "") {
+            var select = document.getElementById("cohorts"); var options = data; for (var i = 0; i <
+                options.length; i++) {
+                var opt = options[i]; var el = document.createElement("option");
+                el.textContent = opt.name; el.value = opt.id; select.appendChild(el);
+            } if
+                (sessionStorage.getItem("cohortId") != null && sessionStorage.getItem("cohortId") != "") {
                 select.value = sessionStorage.getItem("cohortId");
-            }
-            else {
+            } else {
                 select.value = options[0].id;
                 chooseCohort();
             }
-        });
-
-        function ChooseCohort() {
-            let cohortId = document.getElementById('cohorts').value;
-            // Store the cohort id across pages;
+        }); function ChooseCohort() {
+            let
+                cohortId = document.getElementById('cohorts').value; // Store the cohort id across pages;
             sessionStorage.setItem("cohortId", cohortId);
-        }
-    </script>
+        } </script>
 </body>
 
 </html>
