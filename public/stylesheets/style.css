@@ -44,6 +44,22 @@ td {
     background-color: lightblue;
 }
 
+#red_team {
+    background-color: IndianRed;
+}
+
+#purple_team {
+    background-color: Violet;
+}
+
+#orange_team {
+    background-color: Orange;
+}
+
+#green_team {
+    background-color: PaleGreen;
+}
+
 .team_box {
     width: 100%;
     height: 100px;

@@ -105,16 +105,14 @@
 
 			<div id="teams" class="col-sm-8 brand-border" style="min-height: 700px;">
 				<h2>Teams</h2>
-				<button class="btn brand-button" onclick="CreateNewTeam()">New</button>
 				<div id="teamsInner">
+					<button class="btn brand-button" onclick="CreateNewTeam()">New</button>
+					<button class="btn brand-button" onclick="SetGameActive()">Set active</button>
 					<div id="yellow_team" class="brand-border team_box" ondrop="drop_handler(event);"
 						ondragover="dragover_handler(event);"></div>
 					<div id="blue_team" class="brand-border team_box" ondrop="drop_handler(event);"
 						ondragover="dragover_handler(event);"></div>
-
-					<button class="btn brand-button" onclick="SetGameActive()">Set active</button>
 				</div>
-
 
 			</div>
 			<div class="col-sm-2 brand-border" style="min-height: 700px;">
@@ -268,7 +266,7 @@
 				console.log("dragOver");
 				// Change the target element's border to signify a drag over event
 				// has occurred
-				ev.currentTarget.style.background = "lightblue";
+				//ev.currentTarget.style.background = "lightblue";
 				ev.preventDefault();
 			}
 			function drop_handler(ev) {
@@ -281,7 +279,7 @@
 				// if (id == "src_move" && ev.target.id == "dest_move") {
 				// 	ev.target.appendChild(document.getElementById(id));
 				// }
-				if (ev.target.id == "yellow_team" || ev.target.id == "blue_team") {
+				if (ev.target.id == "yellow_team" || ev.target.id == "blue_team" || ev.target.id == "red_team" || ev.target.id == "orange_team" || ev.target.id == "purple_team" || ev.target.id == "green_team") {
 					ev.target.appendChild(document.getElementById(id));
 				}
 			}
@@ -368,6 +366,54 @@
 
 				});
 			}
+
+			function CreateNewTeam() {
+				var redTeamDiv = document.getElementById("red_team");
+				var purpleTeamDiv = document.getElementById("purple_team");
+				var orangeTeamDiv = document.getElementById("orange_team");
+				var greenTeamDiv = document.getElementById("green_team");
+				if (!redTeamDiv) {
+					const redTeamDiv = document.createElement("div");
+					redTeamDiv.setAttribute("id", "red_team");
+					redTeamDiv.setAttribute("ondrop", "drop_handler(event);");
+					redTeamDiv.setAttribute("ondragover", "dragover_handler(event);");
+					redTeamDiv.classList.add("brand-border");
+					redTeamDiv.classList.add("team_box");
+					var teamsInner = document.getElementById('teamsInner');
+					teamsInner.appendChild(redTeamDiv);
+				}
+				else if (!purpleTeamDiv) {
+					const purpleTeamDiv = document.createElement("div");
+					purpleTeamDiv.setAttribute("id", "purple_team");
+					purpleTeamDiv.setAttribute("ondrop", "drop_handler(event);");
+					purpleTeamDiv.setAttribute("ondragover", "dragover_handler(event);");
+					purpleTeamDiv.classList.add("brand-border");
+					purpleTeamDiv.classList.add("team_box");
+					var teamsInner = document.getElementById('teamsInner');
+					teamsInner.appendChild(purpleTeamDiv);
+				}
+				else if (!orangeTeamDiv) {
+					const orangeTeamDiv = document.createElement("div");
+					orangeTeamDiv.setAttribute("id", "orange_team");
+					orangeTeamDiv.setAttribute("ondrop", "drop_handler(event);");
+					orangeTeamDiv.setAttribute("ondragover", "dragover_handler(event);");
+					orangeTeamDiv.classList.add("brand-border");
+					orangeTeamDiv.classList.add("team_box");
+					var teamsInner = document.getElementById('teamsInner');
+					teamsInner.appendChild(orangeTeamDiv);
+				}
+				else if (!greenTeamDiv) {
+					const greenTeamDiv = document.createElement("div");
+					greenTeamDiv.setAttribute("id", "green_team");
+					greenTeamDiv.setAttribute("ondrop", "drop_handler(event);");
+					greenTeamDiv.setAttribute("ondragover", "dragover_handler(event);");
+					greenTeamDiv.classList.add("brand-border");
+					greenTeamDiv.classList.add("team_box");
+					var teamsInner = document.getElementById('teamsInner');
+					teamsInner.appendChild(greenTeamDiv);
+				}
+			}
+
 		</script>
 </body>
 

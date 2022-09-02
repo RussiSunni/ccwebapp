@@ -150,11 +150,14 @@
                     var date = data[i].dob.substring(0, 10);
                     cell4.innerHTML = date;
                     cell5.innerHTML = data[i].is_admin;
-                    var a = document.createElement("a");
-                    cell6.appendChild(a);
-                    a.setAttribute("href", data[i].login_link);
-                    a.setAttribute("target", "_blank");
-                    a.innerHTML = "Link";
+
+                    if (data[i].login_link != null) {
+                        var a = document.createElement("a");
+                        cell6.appendChild(a);
+                        a.setAttribute("href", data[i].login_link);
+                        a.setAttribute("target", "_blank");
+                        a.innerHTML = "Link";
+                    }
 
                     // Delete user button.              
                     var button = document.createElement("button");
