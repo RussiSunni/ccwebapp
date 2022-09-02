@@ -78,7 +78,9 @@
 
                     </td>
                     <td>1</td>
-                    <td>1</td>
+                    <td>
+                        <%= cohorts[i].start_date %>
+                    </td>
                     <td>
                         <form method="POST" action="/cohorts/<%=cohorts[i].id %>/delete?_method=DELETE">
                             <input type="submit" value="delete" />
