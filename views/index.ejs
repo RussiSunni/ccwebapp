@@ -53,7 +53,7 @@
 				<select class="form-select" id="cohorts" name="cohorts">
 					<option>Choose a cohort</option>>
 				</select>
-				<button class="btn brand-button" type="submit" onclick="chooseCohort()">Submit</button>
+				<button class="btn brand-button" type="submit" onclick="ChooseCohort()">Submit</button>
 			</div>
 		</div>
 		<div class="row">
@@ -64,33 +64,35 @@
 					<input type="hidden" id="cohort_id" name="cohort_id">
 					<label for="game-types">Game type</label>
 					<select class="form-select" id="game_type" name="game_type">
-						<option>Choose a game type</option>>
+						<!-- <option>Choose a game type</option>> -->
 					</select>
 					<div class="mb-3">
 						<label for="name">Name</label>
-						<input id="name" type="string" placeholder="name" name="name" class="form-control">
+						<input id="name" type="string" placeholder="name" name="name" class="form-control" required>
 					</div>
 					<div class="mb-3">
 						<label for="rounds">Number of rounds</label>
-						<input id="rounds" type="number" placeholder="rounds" name="rounds" class="form-control">
+						<input id="rounds" type="number" placeholder="rounds" name="rounds" class="form-control"
+							required>
 					</div>
 					<div class="mb-3">
 						<label for="moves">Moves per round</label>
-						<input id="moves" type="number" placeholder="moves" name="moves" class="form-control">
+						<input id="moves" type="number" placeholder="moves" name="moves" class="form-control" required>
 					</div>
 					<div class="mb-3">
 						<label for="seconds">Seconds per round</label>
-						<input id="seconds" type="number" placeholder="seconds" name="seconds" class="form-control">
+						<input id="seconds" type="number" placeholder="seconds" name="seconds" class="form-control"
+							required>
 					</div>
 					<div class="mb-3">
 						<label for="toggle_points">Points per connection</label>
 						<input id="toggle_points" type="number" placeholder="points per connection" name="toggle_points"
-							class="form-control">
+							class="form-control" required>
 					</div>
 					<div class="mb-3">
 						<label for="endpoint_points">Points per endpoint</label>
 						<input id="endpoint_points" type="number" placeholder="Points per endpoint"
-							name="endpoint_points" class="form-control">
+							name="endpoint_points" class="form-control" required>
 					</div>
 					<button class="btn brand-button" type="submit">Create Game</button>
 				</form>
@@ -166,14 +168,14 @@
 					currentCohortId = sessionStorage.getItem("cohortId");
 					// Populate hidden cohort input field in Create Game form.
 					document.getElementById("cohort_id").setAttribute("value", sessionStorage.getItem("cohortId"));
-					chooseCohort();
+					//ChooseCohort();
 				}
 				else {
 					select.value = options[0].id;
 					currentCohortId = options[0].id;
 					// Populate hidden cohort input field in Create Game form.
 					document.getElementById("cohort_id").setAttribute("value", options[0].id);
-					chooseCohort();
+					ChooseCohort();
 				}
 
 				// Script for the existing games list
@@ -186,7 +188,9 @@
 				// get the rows from the SQL query
 				$.get(gamesUrl, function (data, status) {
 					var table = document.getElementById("existing_games");
+					//	console.log(data.length);
 					for (var i = 0; i < data.length; i++) {
+						//		console.log(data.length);
 						const button = document.createElement("button");
 						var row = table.insertRow(0);
 						var cell = row.insertCell(0);
@@ -210,7 +214,7 @@
 			let teamBox = document.getElementById('teamBox');
 			var cohortId;
 
-			function chooseCohort() {
+			function ChooseCohort() {
 				cohortId = document.getElementById('cohorts').value;
 				// Store the cohort id across pages;
 				sessionStorage.setItem("cohortId", cohortId);
