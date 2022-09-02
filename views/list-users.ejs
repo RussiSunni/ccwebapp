@@ -68,7 +68,6 @@
                     <th>Email</th>
                     <th>Name</th>
                     <th>DOB</th>
-                    <th>Cohort</th>
                     <th>Admin</th>
                     <th>Login Link</th>
                     <th>Last Login</th>
@@ -136,7 +135,6 @@
                     var cell6 = row.insertCell(5);
                     var cell7 = row.insertCell(6);
                     var cell8 = row.insertCell(7);
-                    var cell9 = row.insertCell(8);
 
                     // Edit user button.
                     var form1 = document.createElement("form");
@@ -151,9 +149,9 @@
                     cell3.innerHTML = data[i].name;
                     var date = data[i].dob.substring(0, 10);
                     cell4.innerHTML = date;
-                    cell6.innerHTML = data[i].is_admin;
+                    cell5.innerHTML = data[i].is_admin;
                     var a = document.createElement("a");
-                    cell7.appendChild(a);
+                    cell6.appendChild(a);
                     a.setAttribute("href", data[i].login_link);
                     a.setAttribute("target", "_blank");
                     a.innerHTML = "Link";
@@ -163,7 +161,7 @@
                     button.innerHTML = "delete";
                     button.setAttribute("onclick", "DeleteUser(this)");
                     button.setAttribute("data-user-id", data[i].id);
-                    cell9.appendChild(button);
+                    cell8.appendChild(button);
                 }
             });
         }
