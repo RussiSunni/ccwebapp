@@ -238,6 +238,7 @@
 						const div = document.createElement("div");
 						div.setAttribute("draggable", "true");
 						div.classList.add("brand-border");
+						div.classList.add("student_draggable");
 						div.setAttribute("id", "src_move" + [i]);
 						div.setAttribute("ondragstart", "dragstart_handler(event);");
 						div.setAttribute("ondragend", "dragend_handler(event);");
@@ -299,8 +300,6 @@
 
 				// get the rows from the SQL query
 				$.get(gameUrl, function (data, status) {
-					console.log(data[0].points_endpoint);
-
 					game.numberOfMoves = data[0].number_moves;
 					game.numberOfRounds = data[0].number_rounds;
 					game.numberOfSeconds = data[0].number_seconds;
@@ -320,8 +319,6 @@
 							+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
 							"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
 
-						console.log(loginLink);
-
 						// Update the users table.
 						let data1 = { "login_link": loginLink }
 
@@ -331,7 +328,7 @@
 							contentType: 'application/json',
 							data: JSON.stringify(data1), // access in body
 							success: function (data1) {
-								console.log('Load was performed.');
+								console.log('Links created.');
 							}
 						});
 					}
@@ -348,8 +345,6 @@
 							+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
 							"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
 
-						console.log(loginLink);
-
 						// Update the users table.
 						let data2 = { "login_link": loginLink }
 
@@ -359,7 +354,7 @@
 							contentType: 'application/json',
 							data: JSON.stringify(data2), // access in body
 							success: function (data2) {
-								console.log('Load was performed.');
+								console.log('Links created.');
 							}
 						});
 					}
@@ -377,8 +372,6 @@
 								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
 								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
 
-							console.log(loginLink);
-
 							// Update the users table.
 							let data3 = { "login_link": loginLink }
 
@@ -388,7 +381,7 @@
 								contentType: 'application/json',
 								data: JSON.stringify(data3), // access in body
 								success: function (data3) {
-									console.log('Load was performed.');
+									console.log('Links created.');
 								}
 							});
 						}
@@ -407,8 +400,6 @@
 								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
 								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
 
-							console.log(loginLink);
-
 							// Update the users table.
 							let data4 = { "login_link": loginLink }
 
@@ -418,7 +409,7 @@
 								contentType: 'application/json',
 								data: JSON.stringify(data4), // access in body
 								success: function (data4) {
-									console.log('Load was performed.');
+									console.log('Links created.');
 								}
 							});
 						}
@@ -437,8 +428,6 @@
 								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
 								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
 
-							console.log(loginLink);
-
 							// Update the users table.
 							let data5 = { "login_link": loginLink }
 
@@ -448,7 +437,7 @@
 								contentType: 'application/json',
 								data: JSON.stringify(data5),
 								success: function (data5) {
-									console.log('Load was performed.');
+									console.log('Links created.');
 								}
 							});
 						}
@@ -467,8 +456,6 @@
 								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
 								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
 
-							console.log(loginLink);
-
 							// Update the users table.
 							let data6 = { "login_link": loginLink }
 
@@ -478,12 +465,14 @@
 								contentType: 'application/json',
 								data: JSON.stringify(data6),
 								success: function (data6) {
-									console.log('Load was performed.');
+									console.log('Links created.');
 								}
 							});
 						}
 					}
 
+
+					alert("Student links created!");
 				});
 			}
 
