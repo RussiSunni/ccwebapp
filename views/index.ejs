@@ -364,6 +364,126 @@
 						});
 					}
 
+					let redTeam = document.getElementById('red_team');
+					if (redTeam) {
+						let redTeamChildNodes = redTeam.childNodes;
+						for (let i = 0; i < redTeamChildNodes.length; i++) {
+							let userName = redTeamChildNodes[i].innerHTML;
+							let userId = redTeamChildNodes[i].getAttribute("data-user-id");
+							game.team = "Red";
+
+							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + game.team
+								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
+								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
+
+							console.log(loginLink);
+
+							// Update the users table.
+							let data3 = { "login_link": loginLink }
+
+							$.ajax({
+								url: '/users/' + userId,
+								type: 'PUT',
+								contentType: 'application/json',
+								data: JSON.stringify(data3), // access in body
+								success: function (data3) {
+									console.log('Load was performed.');
+								}
+							});
+						}
+					}
+
+					let purpleTeam = document.getElementById('purple_team');
+					if (purpleTeam) {
+						let purpleTeamChildNodes = purpleTeam.childNodes;
+						for (let i = 0; i < purpleTeamChildNodes.length; i++) {
+							let userName = purpleTeamChildNodes[i].innerHTML;
+							let userId = purpleTeamChildNodes[i].getAttribute("data-user-id");
+							game.team = "Purple";
+
+							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + game.team
+								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
+								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
+
+							console.log(loginLink);
+
+							// Update the users table.
+							let data4 = { "login_link": loginLink }
+
+							$.ajax({
+								url: '/users/' + userId,
+								type: 'PUT',
+								contentType: 'application/json',
+								data: JSON.stringify(data4), // access in body
+								success: function (data4) {
+									console.log('Load was performed.');
+								}
+							});
+						}
+					}
+
+					let orangeTeam = document.getElementById('orange_team');
+					if (orangeTeam) {
+						let orangeTeamChildNodes = orangeTeam.childNodes;
+						for (let i = 0; i < orangeTeamChildNodes.length; i++) {
+							let userName = orangeTeamChildNodes[i].innerHTML;
+							let userId = orangeTeamChildNodes[i].getAttribute("data-user-id");
+							game.team = "Orange";
+
+							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + game.team
+								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
+								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
+
+							console.log(loginLink);
+
+							// Update the users table.
+							let data5 = { "login_link": loginLink }
+
+							$.ajax({
+								url: '/users/' + userId,
+								type: 'PUT',
+								contentType: 'application/json',
+								data: JSON.stringify(data5),
+								success: function (data5) {
+									console.log('Load was performed.');
+								}
+							});
+						}
+					}
+
+					let greenTeam = document.getElementById('green_team');
+					if (greenTeam) {
+						let greenTeamChildNodes = greenTeam.childNodes;
+						for (let i = 0; i < greenTeamChildNodes.length; i++) {
+							let userName = greenTeamChildNodes[i].innerHTML;
+							let userId = greenTeamChildNodes[i].getAttribute("data-user-id");
+							game.team = "Green";
+
+							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + game.team
+								+ "&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
+								"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
+
+							console.log(loginLink);
+
+							// Update the users table.
+							let data6 = { "login_link": loginLink }
+
+							$.ajax({
+								url: '/users/' + userId,
+								type: 'PUT',
+								contentType: 'application/json',
+								data: JSON.stringify(data6),
+								success: function (data6) {
+									console.log('Load was performed.');
+								}
+							});
+						}
+					}
+
 				});
 			}
 
