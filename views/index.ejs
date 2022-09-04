@@ -166,7 +166,7 @@
 					currentCohortId = sessionStorage.getItem("cohortId");
 					// Populate hidden cohort input field in Create Game form.
 					document.getElementById("cohort_id").setAttribute("value", sessionStorage.getItem("cohortId"));
-					//ChooseCohort();
+					ChooseCohort();
 				}
 				else {
 					select.value = options[0].id;
@@ -178,11 +178,14 @@
 
 				// Script for the existing games list
 				var gamesUrl = "/cohorts/" + currentCohortId + "/games";
-				ListGames(gamesUrl);
+				//ListGames(gamesUrl);
 			});
 
 
 			function ListGames(gamesUrl) {
+
+				//	console.log("test");
+
 				// get the rows from the SQL query
 				$.get(gamesUrl, function (data, status) {
 					var table = document.getElementById("existing_games");
