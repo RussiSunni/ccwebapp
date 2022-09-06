@@ -16,76 +16,51 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Conscious Coding</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Create Game</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cohorts">Cohorts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Log Out</a>
-                    </li>
-                </ul>
-            </div>
+    <%- include('partials/navbar'); %>
+
+        <div class="container mt-3">
+            <form method="POST" action="/users/<%- userId %>/edit?_method=PUT">
+                <div class="mb-3">
+                    <label for="id" class="form-label">Id</label>
+                    <input type="text" class="form-control" id="id" aria-describedby="id" name="id" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="name" name="name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" id="email" placeholder="email address" class="form-control" name="email">
+                </div>
+                <div class="mb-3"> <label for="username">DOB</label>
+                    <input type="date" id="dob" placeholder="DOB" name="dob" class="form-control">
+                </div>
+                <div class="mb-3">
+                      <input type="checkbox" id="is_admin" name="is_admin" value="1">
+                      <label for="is_admin">Is an admin?</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-    </nav>
 
-    <div class="container mt-3">
-        <form method="POST" action="/users/<%- userId %>/edit?_method=PUT">
-            <div class="mb-3">
-                <label for="id" class="form-label">Id</label>
-                <input type="text" class="form-control" id="id" aria-describedby="id" name="id" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="name">Name</label>
-                <input type="text" id="name" placeholder="name" name="name" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" id="email" placeholder="email address" class="form-control" name="email">
-            </div>
-            <div class="mb-3"> <label for="username">DOB</label>
-                <input type="date" id="dob" placeholder="DOB" name="dob" class="form-control">
-            </div>
-            <div class="mb-3">
-                  <input type="checkbox" id="is_admin" name="is_admin" value="1">
-                  <label for="is_admin">Is an admin?</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        <script type="text/javascript">
+            var userId = '<%- userId %>';
+            var url = "/users/show/" + userId;
 
-    <script type="text/javascript">
-        var userId = '<%- userId %>';
-        var url = "/users/show/" + userId;
+            $.get(url, function (data, status) {
+                console.log(data);
+                document.getElementById("id").value = data.id;
+                document.getElementById("name").value = data.name;
+                document.getElementById("email").value = data.email;
+                var date = data.dob.substring(0, 10);
+                document.getElementById('dob').value = date;
 
-        $.get(url, function (data, status) {
-            console.log(data);
-            document.getElementById("id").value = data.id;
-            document.getElementById("name").value = data.name;
-            document.getElementById("email").value = data.email;
-            var date = data.dob.substring(0, 10);
-            document.getElementById('dob').value = date;
+                if (data.is_admin == 1) {
+                    document.getElementById('is_admin').checked = true;
+                }
 
-            if (data.is_admin == 1) {
-                document.getElementById('is_admin').checked = true;
-            }
-
-        });
-    </script>
+            });
+        </script>
 
 </body>
 
