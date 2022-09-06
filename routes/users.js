@@ -36,18 +36,23 @@ conn.connect((err) => {
     }
 });
 
-
 /**
  * Get All Items
  *
  * @return response()
  */
 router.get('/', (req, res) => {
-    let sqlQuery = "SELECT * FROM users";
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.render('list-users');
-    });
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "SELECT * FROM users";
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.render('list-users');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 

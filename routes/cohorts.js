@@ -58,18 +58,23 @@ router.post('/add', (req, res) => {
     });
 });
 
-
 /**
  * Get All Items
  *
  * @return response()
  */
 router.get('/', (req, res) => {
-    let sqlQuery = "SELECT * FROM cohorts";
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.render('list-cohorts', { cohorts: results });
-    });
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "SELECT * FROM cohorts";
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.render('list-cohorts', { cohorts: results });
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 router.get('/list', (req, res) => {
