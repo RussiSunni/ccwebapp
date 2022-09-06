@@ -37,8 +37,15 @@ conn.connect((err) => {
 
 // Add cohort
 router.get('/add', (req, res) => {
-    res.render('add-cohort')
+    session = req.session;
+    if (session.userid) {
+        res.render('add-cohort');
+    }
+    else {
+        res.redirect('/login');
+    }
 })
+
 
 /**
  * Create New Item
@@ -46,16 +53,22 @@ router.get('/add', (req, res) => {
  * @return response()
  */
 router.post('/add', (req, res) => {
-    let data = { name: req.body.name };
-    let sqlQuery = "INSERT INTO cohorts SET ?";
-    let query = conn.query(sqlQuery, data, (err, results) => {
-        if (err) {
-            throw err;
-        }
-        else {
-            res.redirect("/cohorts");
-        }
-    });
+    session = req.session;
+    if (session.userid) {
+        let data = { name: req.body.name };
+        let sqlQuery = "INSERT INTO cohorts SET ?";
+        let query = conn.query(sqlQuery, data, (err, results) => {
+            if (err) {
+                throw err;
+            }
+            else {
+                res.redirect("/cohorts");
+            }
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 /**
@@ -94,7 +107,13 @@ router.get('/list', (req, res) => {
  * @return response()
  */
 router.get('/:id', (req, res) => {
-    res.render('show-cohort', { cohortId: req.params.id });
+    session = req.session;
+    if (session.userid) {
+        res.render('show-cohort', { cohortId: req.params.id });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 
@@ -148,14 +167,20 @@ router.get('/:id/public-links', (req, res) => {
  * @return response()
  */
 router.delete('/:id/delete', (req, res, next) => {
-    let sqlQuery = "DELETE FROM cohorts WHERE id=" + req.params.id;
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "DELETE FROM cohorts WHERE id=" + req.params.id;
 
-    // need to cascade to delete relevant game and users.
+        // need to cascade to delete relevant game and users.
 
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.redirect('/cohorts');
-    });
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.redirect('/cohorts');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 /**
@@ -164,12 +189,18 @@ router.delete('/:id/delete', (req, res, next) => {
  * @return response()
  */
 router.put('/:id', (req, res) => {
-    let sqlQuery = "UPDATE cohorts SET game_type='" + req.body.game + "' WHERE id=" + req.params.id;
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "UPDATE cohorts SET game_type='" + req.body.game + "' WHERE id=" + req.params.id;
 
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.render('index');
-    });
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.render('index');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 

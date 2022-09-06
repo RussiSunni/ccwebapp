@@ -30,22 +30,29 @@ conn.connect((err) => {
     }
 });
 
+
 /**
  * Create New Item
  *
  * @return response()
  */
 router.post('/add', (req, res) => {
-    let data = {
-        cohort_id: req.body.cohort_id, name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.moves,
-        number_seconds: req.body.seconds, points_toggle: req.body.toggle_points,
-        points_endpoint: req.body.endpoint_points, game_type: req.body.game_type
-    };
-    let sqlQuery = "INSERT INTO games SET ?";
-    let query = conn.query(sqlQuery, data, (err, results) => {
-        if (err) throw err;
-        res.redirect('/');
-    });
+    session = req.session;
+    if (session.userid) {
+        let data = {
+            cohort_id: req.body.cohort_id, name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.moves,
+            number_seconds: req.body.seconds, points_toggle: req.body.toggle_points,
+            points_endpoint: req.body.endpoint_points, game_type: req.body.game_type
+        };
+        let sqlQuery = "INSERT INTO games SET ?";
+        let query = conn.query(sqlQuery, data, (err, results) => {
+            if (err) throw err;
+            res.redirect('/');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 

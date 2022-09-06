@@ -78,7 +78,13 @@ router.get('/show/:id', (req, res) => {
 
 // Add user
 router.get('/add', (req, res) => {
-    res.render('add-user')
+    session = req.session;
+    if (session.userid) {
+        res.render('add-user');
+    }
+    else {
+        res.redirect('/login');
+    }
 })
 
 /**
@@ -87,17 +93,23 @@ router.get('/add', (req, res) => {
  * @return response()
  */
 router.post('/add', (req, res) => {
-    let data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
+    session = req.session;
+    if (session.userid) {
+        let data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
 
-    let sqlQuery = "INSERT INTO users SET ?";
-    let query = conn.query(sqlQuery, data, (err, results) => {
-        if (err) {
-            throw err;
-        }
-        else {
-            res.redirect("/users");
-        }
-    });
+        let sqlQuery = "INSERT INTO users SET ?";
+        let query = conn.query(sqlQuery, data, (err, results) => {
+            if (err) {
+                throw err;
+            }
+            else {
+                res.redirect("/users");
+            }
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 
@@ -107,27 +119,43 @@ router.post('/add', (req, res) => {
  * @return response()
  */
 router.put('/:id', (req, res) => {
-    let sqlQuery = "UPDATE users SET login_link='" + req.body.login_link + "' WHERE id=" + req.params.id;
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "UPDATE users SET login_link='" + req.body.login_link + "' WHERE id=" + req.params.id;
 
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.render('index');
-    });
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.render('index');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 router.get('/:id/edit', (req, res) => {
-    res.render('edit-user', { userId: req.params.id });
+    session = req.session;
+    if (session.userid) {
+        res.render('edit-user', { userId: req.params.id });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 router.put('/:id/edit', (req, res) => {
-    console.log(req.body);
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + " ' WHERE id=" + req.params.id;
 
-    let sqlQuery = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + " ' WHERE id=" + req.params.id;
-
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.redirect("/users");
-    });
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.redirect("/users");
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 
@@ -137,12 +165,18 @@ router.put('/:id/edit', (req, res) => {
  * @return response()
  */
 router.delete('/:id', (req, res) => {
-    let sqlQuery = "DELETE FROM users WHERE id=" + req.params.id;
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "DELETE FROM users WHERE id=" + req.params.id;
 
-    let query = conn.query(sqlQuery, (err, results) => {
-        if (err) throw err;
-        res.render('list-users');
-    });
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.render('list-users');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 
