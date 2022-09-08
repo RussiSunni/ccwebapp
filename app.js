@@ -85,6 +85,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login-attempt', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+
     var sqlQuery = "";
 
     if (req.body.password) {
@@ -99,12 +100,14 @@ app.post('/login-attempt', (req, res) => {
         if (err) throw err;
 
         if (results.length > 0) {
+            //  console.log("test");
+
             session = req.session;
             session.userid = req.body.email;
             res.redirect('/');
         } else {
-            res.end();
-            // res.send('Incorrect Username and/or Password!');
+            //res.end();
+            res.send('Incorrect Username and/or Password!');
         }
         res.end();
     });
