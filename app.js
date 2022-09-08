@@ -38,8 +38,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'C0nsc!0u5C0d!ng2022',
-    //password: '',
+    //password: 'C0nsc!0u5C0d!ng2022',
+    password: '',
     database: 'conscious_coding'
 });
 
@@ -85,9 +85,15 @@ app.get('/login', (req, res) => {
 
 app.post('/login-attempt', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    var sqlQuery = "";
 
-    // Execute SQL query that'll select the account from the database based on the specified username and password.
-    let sqlQuery = "SELECT * FROM conscious_coding.users WHERE conscious_coding.users.is_admin = 1 AND conscious_coding.users.email = '" + req.body.email + "' AND conscious_coding.users.password = '" + req.body.password + "';";
+    if (req.body.password) {
+        // Execute SQL query that'll select the account from the database based on the specified username and password.
+        sqlQuery = "SELECT * FROM conscious_coding.users WHERE conscious_coding.users.is_admin = 1 AND conscious_coding.users.email = '" + req.body.email + "' AND conscious_coding.users.password = '" + req.body.password + "';";
+    }
+    else if (req.body.admin_code) {
+        sqlQuery = "SELECT * FROM conscious_coding.users WHERE conscious_coding.users.is_admin = 1 AND conscious_coding.users.email = '" + req.body.email + "' AND conscious_coding.users.admin_code = '" + req.body.admin_code + "';";
+    }
 
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
@@ -95,10 +101,10 @@ app.post('/login-attempt', (req, res) => {
         if (results.length > 0) {
             session = req.session;
             session.userid = req.body.email;
-            // console.log(req.session)
             res.redirect('/');
         } else {
-            res.send('Incorrect Username and/or Password!');
+            res.end();
+            // res.send('Incorrect Username and/or Password!');
         }
         res.end();
     });

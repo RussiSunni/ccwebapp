@@ -3,6 +3,7 @@ const router = express.Router()
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override')
+const { v4: uuidv4 } = require('uuid');
 
 router.use(bodyParser.json());
 router.use(methodOverride('_method'));
@@ -16,8 +17,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'C0nsc!0u5C0d!ng2022',
-    //password: '',
+    //password: 'C0nsc!0u5C0d!ng2022',
+    password: '',
     database: 'conscious_coding'
 });
 
@@ -53,6 +54,15 @@ router.get('/', (req, res) => {
     else {
         res.redirect('/login');
     }
+});
+
+router.get('/list', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sqlQuery = "SELECT * FROM users";
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
 });
 
 
@@ -95,7 +105,18 @@ router.get('/add', (req, res) => {
 router.post('/add', (req, res) => {
     session = req.session;
     if (session.userid) {
-        let data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
+        var adminLink = "";
+        var adminCode = "";
+        var url = req.protocol + '://' + req.get('host') + "/login";
+        var data = {};
+        if (req.body.is_admin == 1) {
+            adminCode = uuidv4();
+            adminLink = url + "?" + adminCode;
+            data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin, admin_link: adminLink, admin_code: adminCode };
+        }
+        else {
+            data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
+        }
 
         let sqlQuery = "INSERT INTO users SET ?";
         let query = conn.query(sqlQuery, data, (err, results) => {

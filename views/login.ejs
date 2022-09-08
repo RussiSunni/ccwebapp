@@ -20,7 +20,7 @@
     <div class="container login-form mt-3">
         <form action="/login-attempt" method="POST">
             <div class="mb-3">
-                <label for="username" class="form-label">Email</label>
+                <label for="email" class="form-label">Email</label>
                 <input type="email" name="email" placeholder="Email" class="form-control" required>
             </div>
             <div class="mb-3">
@@ -35,5 +35,42 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var userData = {};
+
+        if (window.location.href.indexOf("?") > -1) {
+
+            var url = window.location.href;
+            const urlArray = url.split("?");
+
+            // alert(urlArray[1]);
+
+            var url1 = "/users/list";
+            // get the rows from the SQL query
+            $.get(url1, function (data, status) {
+                for (var i = 0; i < data.length; i++) {
+                    if (urlArray[1] == data[i].admin_code) {
+                        console.log(data[i]);
+                        userData.email = data[i].email;
+                        userData.admin_code = data[i].admin_code;
+
+                        url2 = "/login-attempt";
+                        $.post(url2,
+                            {
+                                email: userData.email,
+                                admin_code: userData.admin_code
+                            },
+                            function () {
+                                window.location.href = "http://localhost:3000/";
+                            });
+
+                        return;
+                    }
+                }
+            });
+        }
+    });
+</script>
 
 </html>
