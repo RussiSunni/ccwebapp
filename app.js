@@ -38,8 +38,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    //password: 'C0nsc!0u5C0d!ng2022',
-    password: '',
+    password: 'C0nsc!0u5C0d!ng2022',
+    //password: '',
     database: 'conscious_coding'
 });
 
@@ -64,7 +64,7 @@ conn.connect((err) => {
 app.get('/', (req, res) => {
     session = req.session;
     if (session.userid) {
-        res.render('index');
+        res.render('index', { userId: session.userid });
     }
     else {
         res.redirect('/login');
