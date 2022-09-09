@@ -167,12 +167,46 @@ router.get('/:id/edit', (req, res) => {
 router.put('/:id/edit', (req, res) => {
     session = req.session;
     if (session.userid) {
-        let sqlQuery = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + " ' WHERE id=" + req.params.id;
+        var sqlQuery1;
+        var sqlQuery2;
+        if (req.body.is_admin == 1) {
+            var adminLink = "";
+            var adminCode = "";
 
-        let query = conn.query(sqlQuery, (err, results) => {
-            if (err) throw err;
-            res.redirect("/users");
-        });
+            // Check if they already have an admin code. If so, do nothing.
+            sqlQuery2 = "SELECT admin_code FROM users WHERE id=" + req.params.id;
+            let query = conn.query(sqlQuery2, (err, results) => {
+                if (err) throw err;
+
+                console.log(results[0].admin_code);
+                if (results[0].admin_code != null && results[0].admin_code != "") {
+                    adminCode = results[0].admin_code;
+
+                }
+                else {
+                    // If not.                   
+                    adminCode = uuidv4();
+                }
+
+                var url = req.protocol + '://' + req.get('host') + "/login";
+                adminLink = url + "?" + adminCode;
+                sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + "', admin_code = '" + adminCode + "', admin_link = '" + adminLink + "' WHERE id=" + req.params.id;
+
+                // Duplicated due to async nature of request.
+                let query = conn.query(sqlQuery1, (err, results) => {
+                    if (err) throw err;
+                    res.redirect("/users");
+                });
+            });
+        }
+        else {
+            sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + " ' WHERE id=" + req.params.id;
+
+            let query = conn.query(sqlQuery1, (err, results) => {
+                if (err) throw err;
+                res.redirect("/users");
+            });
+        }
     }
     else {
         res.redirect('/login');
