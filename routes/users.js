@@ -190,7 +190,7 @@ router.put('/:id/edit', (req, res) => {
 
                 var url = req.protocol + '://' + req.get('host') + "/login";
                 adminLink = url + "?" + adminCode;
-                sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + "', admin_code = '" + adminCode + "', admin_link = '" + adminLink + "' WHERE id=" + req.params.id;
+                sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = 1, admin_code = '" + adminCode + "', admin_link = '" + adminLink + "' WHERE id=" + req.params.id;
 
                 // Duplicated due to async nature of request.
                 let query = conn.query(sqlQuery1, (err, results) => {
@@ -200,7 +200,7 @@ router.put('/:id/edit', (req, res) => {
             });
         }
         else {
-            sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + "', admin_code = '', admin_link = '' WHERE id=" + req.params.id;
+            sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = 0, admin_code = '', admin_link = '' WHERE id=" + req.params.id;
 
             let query = conn.query(sqlQuery1, (err, results) => {
                 if (err) throw err;
