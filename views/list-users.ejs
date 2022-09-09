@@ -130,7 +130,7 @@
                         cell4.innerHTML = date;
                         cell5.innerHTML = data[i].is_admin;
 
-                        if (data[i].admin_link != null) {
+                        if (data[i].admin_link != null && data[i].admin_link != "") {
                             var a1 = document.createElement("a");
                             a1.setAttribute("href", data[i].admin_link);
                             a1.setAttribute("target", "_blank");

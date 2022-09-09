@@ -200,7 +200,7 @@ router.put('/:id/edit', (req, res) => {
             });
         }
         else {
-            sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + " ' WHERE id=" + req.params.id;
+            sqlQuery1 = "UPDATE users SET name='" + req.body.name + "', email = '" + req.body.email + "', dob = '" + req.body.dob + "', is_admin = '" + req.body.is_admin + "', admin_code = '', admin_link = '' WHERE id=" + req.params.id;
 
             let query = conn.query(sqlQuery1, (err, results) => {
                 if (err) throw err;
