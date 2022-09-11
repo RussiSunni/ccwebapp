@@ -94,7 +94,8 @@
 						<div id="blue_team" class="brand-border team_box" ondrop="drop_handler(event);"
 							ondragover="dragover_handler(event);"></div>
 					</div>
-
+					<iframe id="admin-gameview" width="960" height="600" style="display: none; margin: auto;"
+						class="mt-3"></iframe>
 				</div>
 				<div class="col-sm-2 brand-border" style="min-height: 700px;">
 					<table id="userTable" class="table">
@@ -102,7 +103,6 @@
 						</tbody>
 					</table>
 				</div>
-
 
 			</div>
 			<script>
@@ -291,6 +291,7 @@
 						game.pointsPerToggle = data[0].points_toggle;
 						game.gameType = data[0].game_type;
 
+						// Student game URLS.
 						let yellowTeam = document.getElementById('yellow_team');
 						let yellowTeamChildNodes = yellowTeam.childNodes;
 						for (let i = 0; i < yellowTeamChildNodes.length; i++) {
@@ -454,6 +455,19 @@
 								});
 							}
 						}
+
+
+						// Game for the admin/teacher.
+						var adminGameView = document.getElementById("admin-gameview");
+						adminGameView.style.display = "block";
+
+						var adminGameUrl = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
+						adminGameUrl = adminGameUrl + "nick_name=Teacher&team=Teacher&rounds=" + game.numberOfRounds + "&moves=" + game.numberOfMoves + "&seconds=" + game.numberOfSeconds +
+							"&toggle_points=" + game.pointsPerToggle + "&endpoint_points=" + game.pointsPerEndpoint;
+
+						// add admin URL to iframe.
+						adminGameView.setAttribute("src", adminGameUrl);
+
 
 
 						alert("Student links created!");
