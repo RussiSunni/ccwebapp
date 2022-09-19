@@ -134,4 +134,7 @@ app.use('/games', gamesRouter)
 const gameTypesRouter = require('./routes/game-types')
 app.use('/game-types', gameTypesRouter)
 
+const mapsRouter = require('./routes/maps')
+app.use('/maps', mapsRouter)
+
 app.listen(3000)
