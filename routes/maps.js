@@ -36,10 +36,26 @@ conn.connect((err) => {
     }
 });
 
+
+/**
+ * Get All Items
+ *
+ * @return response()
+ */
+router.get('/list', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sqlQuery = "SELECT * FROM maps";
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
+
 /**
  * View item
  *
- * @return response()
+ * @return response() 
  */
 router.get('/map-editors/pathways-map-editor', (req, res) => {
     res.render("map-editors/pathways-map-editor");
@@ -52,20 +68,29 @@ router.get('/map-editors/pathways-map-editor', (req, res) => {
  * @return response()
  */
 router.post('/add', (req, res) => {
+    var name;
+    var tiles;
+    var positions;
 
-    let data = { name: req.body.name, data: req.body.data };
+    name = req.body.name;
+    tiles = req.body.tiles;
+    positions = req.body.positions;
+
+    const mapJSON = { elements: tiles, positions: positions };
+    var mapJSONString = JSON.stringify(mapJSON);
+
+    console.log(mapJSON);
+    let data = { name: name, data: mapJSONString };
     let sqlQuery = "INSERT INTO maps SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) {
             throw err;
         }
         else {
-            res.redirect("/cohorts");
+            res.redirect("/index");
         }
     });
 });
-
-
 
 
 
