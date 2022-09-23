@@ -61,6 +61,26 @@ router.get('/map-editors/pathways-map-editor', (req, res) => {
     res.render("map-editors/pathways-map-editor");
 })
 
+/**
+ * Get Single Item
+ *
+ * @return response()
+ */
+router.get('/show/:id', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+
+    let sqlQuery = `
+    SELECT *
+    FROM conscious_coding.maps
+    WHERE conscious_coding.maps.id = ` + req.params.id;
+
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.json(results[0]);
+    });
+});
+
+
 
 /**
  * Create New Item
