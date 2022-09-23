@@ -96,7 +96,7 @@ router.post('/add', (req, res) => {
     tiles = req.body.tiles;
     positions = req.body.positions;
 
-    const mapJSON = { elements: tiles, positions: positions };
+    const mapJSON = { name: name, tiles: tiles, positions: positions };
     var mapJSONString = JSON.stringify(mapJSON);
 
     console.log(mapJSON);
