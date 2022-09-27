@@ -47,8 +47,6 @@
                         <th>Admin</th>
                         <th>Admin Link</th>
                         <th>Game Link</th>
-
-                        <th>Last Login</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -113,7 +111,6 @@
                         var cell6 = row.insertCell(5);
                         var cell7 = row.insertCell(6);
                         var cell8 = row.insertCell(7);
-                        var cell9 = row.insertCell(8);
 
                         // Edit user button.
                         var form1 = document.createElement("form");
@@ -151,7 +148,7 @@
                         button.innerHTML = "delete";
                         button.setAttribute("onclick", "DeleteUser(this)");
                         button.setAttribute("data-user-id", data[i].id);
-                        cell9.appendChild(button);
+                        cell8.appendChild(button);
                     }
                 });
             }
