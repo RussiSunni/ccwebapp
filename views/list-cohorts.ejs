@@ -36,7 +36,6 @@
             <table class="table">
                 <tr>
                     <th></th>
-                    <th>Id</th>
                     <th>Name</th>
                     <th>Zoom</th>
                     <th>Start Date</th>
@@ -48,9 +47,6 @@
                             <form action="/cohorts/<%=cohorts[i].id %>/edit">
                                 <input type="submit" value="edit" />
                             </form>
-                        </td>
-                        <td>
-                            <%= cohorts[i].id %>
                         </td>
                         <td>
                             <%= cohorts[i].name %>
