@@ -42,6 +42,21 @@ conn.connect((err) => {
  *
  * @return response()
  */
+router.get('/', (req, res) => {
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "SELECT * FROM maps";
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.render('list-maps', { maps: results });
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
+
 router.get('/list', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     let sqlQuery = "SELECT * FROM maps";
@@ -99,7 +114,7 @@ router.post('/add', (req, res) => {
     const mapJSON = { name: name, tiles: tiles, positions: positions };
     var mapJSONString = JSON.stringify(mapJSON);
 
-    console.log(mapJSON);
+    //console.log(mapJSON);
     let data = { name: name, data: mapJSONString };
     let sqlQuery = "INSERT INTO maps SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
@@ -112,6 +127,26 @@ router.post('/add', (req, res) => {
     });
 });
 
+/**
+* Delete Item
+*
+* @return response()
+*/
+router.delete('/:id/delete', (req, res) => {
+    console.log("test")
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "DELETE FROM maps WHERE id=" + req.params.id;
+
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.redirect('back');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
 
 
 
