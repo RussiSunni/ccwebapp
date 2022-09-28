@@ -55,7 +55,7 @@ router.get('/add', (req, res) => {
 router.post('/add', (req, res) => {
     session = req.session;
     if (session.userid) {
-        let data = { name: req.body.name };
+        let data = { name: req.body.name, zoom_link: req.body.zoom_link };
         let sqlQuery = "INSERT INTO cohorts SET ?";
         let query = conn.query(sqlQuery, data, (err, results) => {
             if (err) {
@@ -118,7 +118,7 @@ router.get('/:id', (req, res) => {
 
 
 // Individual cohort.
-router.get('/api/:id', (req, res) => {
+router.get('/show/:id', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     let sqlQuery = `
@@ -129,7 +129,7 @@ WHERE conscious_coding.cohorts.id = ` + req.params.id + ";";
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
 
-        res.json(results);
+        res.json(results[0]);
     });
 })
 
@@ -188,14 +188,25 @@ router.delete('/:id/delete', (req, res, next) => {
  *
  * @return response()
  */
-router.put('/:id', (req, res) => {
+
+router.get('/:id/edit', (req, res) => {
     session = req.session;
     if (session.userid) {
-        let sqlQuery = "UPDATE cohorts SET game_type='" + req.body.game + "' WHERE id=" + req.params.id;
+        res.render('edit-cohort', { cohortId: req.params.id });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
+router.put('/:id/edit', (req, res, next) => {
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "UPDATE cohorts SET name ='" + req.body.name + "', zoom_link ='" + req.body.zoom_link + "'  WHERE id=" + req.params.id;
 
         let query = conn.query(sqlQuery, (err, results) => {
             if (err) throw err;
-            res.render('index');
+            res.redirect('/cohorts');
         });
     }
     else {

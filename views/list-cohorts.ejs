@@ -36,26 +36,30 @@
             <table class="table">
                 <tr>
                     <th></th>
+                    <th>Id</th>
                     <th>Name</th>
-                    <th>Status</th>
                     <th>Zoom</th>
-                    <th>Game</th>
                     <th>Start Date</th>
                     <th></th>
                 </tr>
                 <% for(var i=0; i<cohorts.length; i++) {%>
                     <tr>
-                        <td>1</td>
+                        <td>
+                            <form action="/cohorts/<%=cohorts[i].id %>/edit">
+                                <input type="submit" value="edit" />
+                            </form>
+                        </td>
+                        <td>
+                            <%= cohorts[i].id %>
+                        </td>
                         <td>
                             <%= cohorts[i].name %>
                         </td>
                         <td>
-
+                            <a href="<%= cohorts[i].zoom_link %>" target="_blank">
+                                <%= cohorts[i].zoom_link %>
+                            </a>
                         </td>
-                        <td>
-
-                        </td>
-                        <td></td>
                         <td>
                             <%= cohorts[i].start_date %>
                         </td>
