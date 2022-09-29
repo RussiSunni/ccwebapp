@@ -23,12 +23,15 @@
             <h1>Map List</h1>
             <table class="table">
                 <tr>
+                    <th></th>
                     <th>Name</th>
                     <th></th>
                 </tr>
                 <% for(var i=0; i<maps.length; i++) {%>
                     <tr>
-
+                        <td>
+                            <a class="editMap">edit</a>
+                        </td>
                         <td>
                             <%= maps[i].name %>
                         </td>
@@ -41,6 +44,25 @@
                     <% } %>
             </table>
         </div>
+
+        <script>
+            var maps = <%- JSON.stringify(maps) %>;
+            var editMapLinks = document.getElementsByClassName("editMap");   
+
+            // Load the JSON for the specific map.
+            var url = "/maps/list";
+            $.get(url, function (data, status) {
+               console.log(data);
+
+                for (var i = 0; i < maps.length; i++) {                   
+                    var editMapPath = "maps/map-editors/pathways-map-editor?map=" + data[i].data;
+                    editMapLinks[i].setAttribute("href", editMapPath);
+                    editMapLinks[i].setAttribute("target", "_blank");
+                }
+            });
+            
+        </script>
+
 </body>
 
 </html>
