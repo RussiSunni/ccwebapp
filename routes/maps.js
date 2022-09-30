@@ -16,8 +16,8 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'C0nsc!0u5C0d!ng2022',
-    //password: '',
+    //password: 'C0nsc!0u5C0d!ng2022',
+    password: '',
     database: 'conscious_coding'
 });
 
@@ -127,13 +127,45 @@ router.post('/add', (req, res) => {
     });
 });
 
+
+/**
+ * Edit Item
+ *
+ * @return response()
+ */
+router.put('/:id/edit', (req, res) => {
+    console.log("test");
+
+    var name;
+    var tiles;
+    var positions;
+
+    name = req.body.name;
+    tiles = req.body.tiles;
+    positions = req.body.positions;
+
+    const mapJSON = { name: name, tiles: tiles, positions: positions };
+    var mapJSONString = JSON.stringify(mapJSON);
+
+    // console.log(mapJSON);
+    // console.log(req.params.id);
+    let sqlQuery = "UPDATE maps SET name ='" + req.body.name + "', data ='" + mapJSONString + "'  WHERE id=" + req.params.id;
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) {
+            throw err;
+        }
+        else {
+            res.redirect("/");
+        }
+    });
+});
+
 /**
 * Delete Item
 *
 * @return response()
 */
 router.delete('/:id/delete', (req, res) => {
-    console.log("test")
     session = req.session;
     if (session.userid) {
         let sqlQuery = "DELETE FROM maps WHERE id=" + req.params.id;

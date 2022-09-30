@@ -47,20 +47,20 @@
 
         <script>
             var maps = <%- JSON.stringify(maps) %>;
-            var editMapLinks = document.getElementsByClassName("editMap");   
+            var editMapLinks = document.getElementsByClassName("editMap");
 
             // Load the JSON for the specific map.
             var url = "/maps/list";
             $.get(url, function (data, status) {
-               console.log(data);
+                console.log(data);
 
-                for (var i = 0; i < maps.length; i++) {                   
-                    var editMapPath = "maps/map-editors/pathways-map-editor?map=" + data[i].data;
+                for (var i = 0; i < maps.length; i++) {
+                    var editMapPath = "maps/map-editors/pathways-map-editor?id=" + data[i].id + "&map=" + data[i].data;
                     editMapLinks[i].setAttribute("href", editMapPath);
                     editMapLinks[i].setAttribute("target", "_blank");
                 }
             });
-            
+
         </script>
 
 </body>
