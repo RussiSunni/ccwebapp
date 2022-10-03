@@ -25,7 +25,7 @@
 			<div class="row">
 				<h1 style="text-align: center;">Create Game</h1>
 				<div class="col-sm-10">
-
+					<a id="zoom_link">Zoom link</a>
 				</div>
 				<div class="col-sm-2">
 					<label for="cohorts">Choose a cohort:</label>
@@ -151,6 +151,9 @@
 				// get the rows from the SQL query
 				$.get(cohortsUrl, function (data, status) {
 					var select = document.getElementById("cohorts");
+
+				//	console.log(data)
+
 					var options = data;
 
 					for (var i = 0; i < options.length; i++) {
@@ -250,6 +253,15 @@
 							div.setAttribute("data-user-id", data[i].id);
 							div.innerHTML = data[i].name;
 						}
+					});
+
+					// Populate Zoom link in top right.
+					var cohortUrl = "/cohorts/show/" + cohortId;
+					$.get(cohortUrl, function (data, status) {			
+					
+						var zoomLink = document.getElementById("zoom_link");
+						zoomLink.setAttribute("href", data.zoom_link);
+						zoomLink.setAttribute("target", "_blank");
 					});
 
 				}
