@@ -152,7 +152,7 @@
 				$.get(cohortsUrl, function (data, status) {
 					var select = document.getElementById("cohorts");
 
-				//	console.log(data)
+					//	console.log(data)
 
 					var options = data;
 
@@ -257,12 +257,17 @@
 
 					// Populate Zoom link in top right.
 					var cohortUrl = "/cohorts/show/" + cohortId;
-					$.get(cohortUrl, function (data, status) {			
-					
-						var zoomLink = document.getElementById("zoom_link");
+					$.get(cohortUrl, function (data, status) {)
+
+					var zoomLink = document.getElementById("zoom_link");
+					if (data.zoom_link != null) {
 						zoomLink.setAttribute("href", data.zoom_link);
 						zoomLink.setAttribute("target", "_blank");
-					});
+					}
+					else {
+						zoomLink.setAttribute("href", "#");
+					}
+				});
 
 				}
 
