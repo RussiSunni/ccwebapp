@@ -162,6 +162,20 @@ router.get('/:id/public-links', (req, res) => {
 });
 
 /**
+ * Get All Maps From a Cohort
+ *
+ * @return response()
+ */
+ router.get('/:id/maps', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let sqlQuery = "SELECT * FROM maps WHERE cohort_id=" + req.params.id;
+    let query = conn.query(sqlQuery, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
+/**
  * Delete Item
  *
  * @return response()

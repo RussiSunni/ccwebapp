@@ -133,7 +133,7 @@ router.post('/add', (req, res) => {
  *
  * @return response()
  */
-router.put('/:id/edit', (req, res) => {
+router.put('/:id/edit', (req, res) => {  
     var name;
     var tiles;
     var positions;
@@ -169,8 +169,8 @@ router.delete('/:id/delete', (req, res) => {
         let sqlQuery = "DELETE FROM maps WHERE id=" + req.params.id;
 
         let query = conn.query(sqlQuery, (err, results) => {
-            if (err) throw err;
-            res.redirect('back');
+            if (err) throw err;          
+            res.render('list-maps');
         });
     }
     else {
