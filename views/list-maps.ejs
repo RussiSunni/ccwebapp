@@ -22,7 +22,7 @@
 
             <div class="row mt-3">
                 <div class="col-sm-10">
-                    <a href="#" class="btn brand-button" role="button">Add map</a>
+                    <a id="createMapButton" class="btn brand-button" role="button">Add map</a>
                 </div>
                 <div class="col-sm-2">
                     <label for="cohorts">Choose a cohort:</label>
@@ -38,7 +38,7 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Name</th>                        
+                        <th>Name</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -78,6 +78,10 @@
             function ChooseCohort() {
                 let cohortId = document.getElementById('cohorts').value;
 
+                let createMapButton = document.getElementById("createMapButton");
+                createMapButton.setAttribute("href", "maps/map-editors/pathways-map-editor?cohort=" + cohortId);
+                createMapButton.setAttribute("target", "_blank");
+
                 // Store the cohort id across pages;
                 sessionStorage.setItem("cohortId", cohortId);
 
@@ -95,7 +99,7 @@
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
                         var cell3 = row.insertCell(2);
-                   
+
                         // Edit user button.
                         const link = document.createElement("a");
                         var editMapPath = "maps/map-editors/pathways-map-editor?id=" + data[i].id + "&map=" + data[i].data;
@@ -104,13 +108,13 @@
                         link.innerHTML = "edit";
                         cell1.appendChild(link);
 
-                        cell2.innerHTML = data[i].name;                     
+                        cell2.innerHTML = data[i].name;
 
                         // Delete user button.              
                         var button = document.createElement("button");
                         button.innerHTML = "delete";
                         button.setAttribute("onclick", "DeleteUser(this)");
-                        button.setAttribute("data-map-id", data[i].id); 
+                        button.setAttribute("data-map-id", data[i].id);
                         cell3.appendChild(button);
                     }
                 });
@@ -126,8 +130,8 @@
                         window.location.reload();
                     }
                 });
-            }        
-          
+            }
+
 
         </script>
 

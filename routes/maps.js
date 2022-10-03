@@ -102,7 +102,9 @@ router.get('/show/:id', (req, res) => {
  *
  * @return response()
  */
-router.post('/add', (req, res) => {
+router.post('/add/:cohortId', (req, res) => {
+
+    var cohortId = req.params.cohortId;
     var name;
     var tiles;
     var positions;
@@ -115,7 +117,7 @@ router.post('/add', (req, res) => {
     var mapJSONString = JSON.stringify(mapJSON);
 
     //console.log(mapJSON);
-    let data = { name: name, data: mapJSONString };
+    let data = { name: name, data: mapJSONString, cohort_id: cohortId };
     let sqlQuery = "INSERT INTO maps SET ?";
     let query = conn.query(sqlQuery, data, (err, results) => {
         if (err) {
@@ -133,7 +135,7 @@ router.post('/add', (req, res) => {
  *
  * @return response()
  */
-router.put('/:id/edit', (req, res) => {  
+router.put('/:id/edit', (req, res) => {
     var name;
     var tiles;
     var positions;
@@ -169,7 +171,7 @@ router.delete('/:id/delete', (req, res) => {
         let sqlQuery = "DELETE FROM maps WHERE id=" + req.params.id;
 
         let query = conn.query(sqlQuery, (err, results) => {
-            if (err) throw err;          
+            if (err) throw err;
             res.render('list-maps');
         });
     }
