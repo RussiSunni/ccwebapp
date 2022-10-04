@@ -42,7 +42,7 @@ router.post('/add', (req, res) => {
         let data = {
             cohort_id: req.body.cohort_id, name: req.body.name, number_rounds: req.body.rounds, number_moves: req.body.moves,
             number_seconds: req.body.seconds, points_toggle: req.body.toggle_points,
-            points_endpoint: req.body.endpoint_points, game_type: req.body.game_type, map_id: req.body.map
+            points_endpoint: req.body.endpoint_points, game_type: req.body.game_type, map_id: req.body.map, number_steals: req.body.steals
         };
         let sqlQuery = "INSERT INTO games SET ?";
         let query = conn.query(sqlQuery, data, (err, results) => {
