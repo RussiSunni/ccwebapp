@@ -7,6 +7,7 @@
   <title>Unity WebGL Player | Game1_PhotonNetworking_with_mapmaker</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -108,9 +109,48 @@
         progressBarFull.style.width = 100 * progress + "%";
       }).then((unityInstance) => {
         loadingBar.style.display = "none";
-        // fullscreenButton.onclick = () => {
         unityInstance.SetFullscreen(1);
-        // };
+
+        // My function to pass the game parameters.
+
+        // Declare the paramters
+        var numberMoves;
+        var numberRounds;
+        var numberSeconds;
+        var numberSteals;
+        var pointsPerEndpoint;
+        var pointsPerToggle;
+        var mapNumber;
+
+        function ajaxCall1() {
+          $.ajax({
+            url: "/games/82",
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+              console.log(res);
+              mapNumber = res[0].map_id;
+              ajaxCall2();
+            }
+          });
+        }
+
+        function ajaxCall2() {
+          $.ajax({
+            url: "/maps/show/1",
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+              console.log(res);
+            }
+          });
+        }
+
+        ajaxCall1();
+
+        // Pass to Unity.
+        unityInstance.SendMessage('GameSettings', 'GetGameParameters', "parameters");
+
       }).catch((message) => {
         alert(message);
       });
