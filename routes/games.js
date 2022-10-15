@@ -10,7 +10,7 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    //password: '',
+    // password: '',
     password: 'C0nsc!0u5C0d!ng2022',
     database: 'conscious_coding'
 });
@@ -80,7 +80,7 @@ router.get('/:id', (req, res) => {
     let sqlQuery = "SELECT * FROM games WHERE id=" + req.params.id;
     let query = conn.query(sqlQuery, (err, results) => {
         if (err) throw err;
-        res.json(results);
+        res.json(results[0]);
     });
 });
 
