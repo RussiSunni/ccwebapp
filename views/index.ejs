@@ -321,6 +321,21 @@
 
 				function SetGameActive() {
 
+					function makeRandomString(length) {
+						var result = '';
+						var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+						var charactersLength = characters.length;
+						for (var i = 0; i < length; i++) {
+							result += characters.charAt(Math.floor(Math.random() *
+								charactersLength));
+						}
+						return result;
+					}
+
+					var randomString = makeRandomString(5);
+
+					var roomName = "RoomC" + cohortId + "G" + gameId + "R" + randomString;
+
 					// Yellow team.
 					let yellowTeam = document.getElementById('yellow_team');
 					let yellowTeamChildNodes = yellowTeam.childNodes;
@@ -330,7 +345,7 @@
 						let team = "Yellow";
 
 						let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
-						loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId;
+						loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId + "&room_name=" + roomName;
 
 						// Update the users table.
 						let data1 = { "login_link": loginLink }
@@ -355,7 +370,7 @@
 						let team = "Blue";
 
 						let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
-						loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId;
+						loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId + "&room_name=" + roomName;
 
 						// Update the users table.
 						let data2 = { "login_link": loginLink }
@@ -380,7 +395,7 @@
 							let team = "Red";
 
 							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
-							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId;
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId + "&room_name=" + roomName;
 
 							// Update the users table.
 							let data3 = { "login_link": loginLink }
@@ -406,7 +421,7 @@
 							let team = "Purple";
 
 							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
-							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId;
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId + "&room_name=" + roomName;
 
 							// Update the users table.
 							let data4 = { "login_link": loginLink }
@@ -432,7 +447,7 @@
 							let team = "Orange";
 
 							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
-							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId;
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId + "&room_name=" + roomName;
 
 							// Update the users table.
 							let data5 = { "login_link": loginLink }
@@ -458,7 +473,7 @@
 							let team = "Green";
 
 							let loginLink = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
-							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId;
+							loginLink = loginLink + "nick_name=" + userName + "&team=" + team + "&game_id=" + gameId + "&room_name=" + roomName;
 
 							// Update the users table.
 							let data6 = { "login_link": loginLink }
@@ -481,7 +496,7 @@
 					adminGameView.style.display = "block";
 
 					var adminGameUrl = window.location.protocol + "//" + window.location.hostname + ":3000/games/pathways?";
-					adminGameUrl = adminGameUrl + "nick_name=Teacher&team=Teacher&game_id=" + gameId;
+					adminGameUrl = adminGameUrl + "nick_name=Teacher&team=Teacher&game_id=" + gameId + "&room_name=" + roomName;
 
 					// add admin URL to iframe.
 					adminGameView.setAttribute("src", adminGameUrl);
