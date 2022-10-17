@@ -215,9 +215,32 @@
 
 				// Press button to choose team.
 				function ChooseGame(button) {
-					var teamsInner = document.getElementById("teamsInner");
-					teamsInner.style.display = "block";
 					gameId = button.getAttribute("data-game-id");
+
+					$.ajax({
+						url: '/games/' + gameId,
+						type: 'GET',
+						contentType: 'application/json',
+						success: function (data) {
+							var mapId = data.map_id;
+							checkIfMapExists(mapId);
+						}
+					});
+
+					function checkIfMapExists(mapId) {
+						$.ajax({
+							url: '/maps/show/' + mapId,
+							type: 'GET',
+							contentType: 'application/json',
+							success: function (data) {
+								//console.log(data)
+								var teamsInner = document.getElementById("teamsInner");
+								teamsInner.style.display = "block";
+							}, error: function (xhr, status, error) {
+								alert("The map for that game has been deleted. Please choose another.");
+							},
+						});
+					}
 				}
 
 				let teamBox = document.getElementById('teamBox');
