@@ -10,7 +10,7 @@ Database Connection
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    // password: '',
+    //password: '',
     password: 'C0nsc!0u5C0d!ng2022',
     database: 'conscious_coding'
 });
@@ -56,19 +56,20 @@ router.post('/add', (req, res) => {
 });
 
 
-// /**
-//  * Get All Games
-//  *
-//  * @return response() 
-//  */
-// router.get('/list', (req, res) => {
-//     res.setHeader('Content-Type', 'application/json');
-//     let sqlQuery = "SELECT * FROM games";
-//     let query = conn.query(sqlQuery, (err, results) => {
-//         if (err) throw err;
-//         res.json(results);
-//     });
-// });
+/**
+ * Get All Items 
+ *
+ * @return response()
+ */
+router.get('/', (req, res) => {
+    session = req.session;
+    if (session.userid) {
+        res.render('list-games');
+    }
+    else {
+        res.redirect('/login');
+    }
+});
 
 /**
  * Get One Game
@@ -82,6 +83,26 @@ router.get('/:id', (req, res) => {
         if (err) throw err;
         res.json(results[0]);
     });
+});
+
+/**
+* Delete Item
+*
+* @return response()
+*/
+router.delete('/:id/delete', (req, res) => {
+    session = req.session;
+    if (session.userid) {
+        let sqlQuery = "DELETE FROM games WHERE id=" + req.params.id;
+
+        let query = conn.query(sqlQuery, (err, results) => {
+            if (err) throw err;
+            res.render('list-games');
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 

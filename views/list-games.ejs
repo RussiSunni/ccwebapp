@@ -22,7 +22,7 @@
 
             <div class="row mt-3">
                 <div class="col-sm-10">
-                    <a id="createMapButton" class="btn brand-button" role="button">Add map</a>
+                    <!-- <a id="createMapButton" class="btn brand-button" role="button">Add map</a> -->
                 </div>
                 <div class="col-sm-2">
                     <label for="cohorts">Choose a cohort:</label>
@@ -33,8 +33,8 @@
                 </div>
             </div>
 
-            <h1>Map List</h1>
-            <table id="mapTable" class="table">
+            <h1>Game List</h1>
+            <table id="gameTable" class="table">
                 <thead>
                     <tr>
                         <th></th>
@@ -78,51 +78,39 @@
             function ChooseCohort() {
                 let cohortId = document.getElementById('cohorts').value;
 
-                let createMapButton = document.getElementById("createMapButton");
-                createMapButton.setAttribute("href", "maps/map-editors/pathways-map-editor?cohort=" + cohortId);
-                createMapButton.setAttribute("target", "_blank");
-
                 // Store the cohort id across pages;
                 sessionStorage.setItem("cohortId", cohortId);
 
                 // Clear existing content.             
-                $("#mapTable tbody tr").remove();
+                $("#gameTable tbody tr").remove();
 
-                var url = "/cohorts/" + cohortId + "/maps";
+                var url = "/cohorts/" + cohortId + "/games";
                 // get the rows from the SQL query
                 $.get(url, function (data, status) {
-                    var tb = document.querySelector('#mapTable tbody');
+                    var tb = document.querySelector('#gameTable tbody');
                     for (var i = 0; i < data.length; i++) {
-                        console.log(data);
+                        // console.log(data);
 
                         var row = tb.insertRow(0);
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
                         var cell3 = row.insertCell(2);
 
-                        // Edit map button.
-                        const link = document.createElement("a");
-                        var editMapPath = "maps/map-editors/pathways-map-editor?id=" + data[i].id + "&map=" + data[i].data;
-                        link.setAttribute("href", editMapPath);
-                        link.setAttribute("target", "_blank");
-                        link.innerHTML = "edit";
-                        cell1.appendChild(link);
-
                         cell2.innerHTML = data[i].name;
 
-                        // Delete map button.              
+                        // Delete game button.              
                         var button = document.createElement("button");
                         button.innerHTML = "delete";
-                        button.setAttribute("onclick", "DeleteMap(this)");
-                        button.setAttribute("data-map-id", data[i].id);
+                        button.setAttribute("onclick", "DeleteGame(this)");
+                        button.setAttribute("data-game-id", data[i].id);
                         cell3.appendChild(button);
                     }
                 });
             }
 
-            function DeleteMap(button) {
-                mapId = button.getAttribute("data-map-id");
-                var url = "/maps/" + mapId + "/delete";
+            function DeleteGame(button) {
+                gameId = button.getAttribute("data-game-id");
+                var url = "/games/" + gameId + "/delete";
                 $.ajax({
                     url: url,
                     type: 'DELETE',
