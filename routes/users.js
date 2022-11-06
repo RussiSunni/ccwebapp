@@ -112,10 +112,16 @@ router.post('/add', (req, res) => {
         if (req.body.is_admin == 1) {
             adminCode = uuidv4();
             adminLink = url + "?" + adminCode;
-            data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin, admin_link: adminLink, admin_code: adminCode };
+            if (req.body.dob != "" && req.body.dob != null)
+                data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin, admin_link: adminLink, admin_code: adminCode };
+            else
+                data = { email: req.body.email, name: req.body.name, cohort_id: req.body.cohort, is_admin: req.body.is_admin, admin_link: adminLink, admin_code: adminCode };
         }
         else {
-            data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
+            if (req.body.dob != "" && req.body.dob != null)
+                data = { email: req.body.email, name: req.body.name, dob: req.body.dob, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
+            else
+                data = { email: req.body.email, name: req.body.name, cohort_id: req.body.cohort, is_admin: req.body.is_admin };
         }
 
         let sqlQuery = "INSERT INTO users SET ?";
@@ -141,6 +147,8 @@ router.post('/add', (req, res) => {
  */
 router.put('/:id', (req, res) => {
     session = req.session;
+
+    //console.log(req.body.login_link);
     if (session.userid) {
         let sqlQuery = "UPDATE users SET login_link='" + req.body.login_link + "' WHERE id=" + req.params.id;
 
@@ -178,7 +186,7 @@ router.put('/:id/edit', (req, res) => {
             let query = conn.query(sqlQuery2, (err, results) => {
                 if (err) throw err;
 
-                console.log(results[0].admin_code);
+                //  console.log(results[0].admin_code);
                 if (results[0].admin_code != null && results[0].admin_code != "") {
                     adminCode = results[0].admin_code;
 
