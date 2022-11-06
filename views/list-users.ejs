@@ -123,9 +123,10 @@
 
                         cell2.innerHTML = data[i].email;
                         cell3.innerHTML = data[i].name;
-                        if (data[i].dob != null)
+                        if (data[i].dob != null) {
                             var date = data[i].dob.substring(0, 10);
-                        cell4.innerHTML = date;
+                            cell4.innerHTML = date;
+                        }
                         cell5.innerHTML = data[i].is_admin;
 
                         if (data[i].admin_link != null && data[i].admin_link != "") {
